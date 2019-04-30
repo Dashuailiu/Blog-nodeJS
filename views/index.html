@@ -1,0 +1,51 @@
+{{extend './_layouts/home.html'}}
+
+{{block 'title'}}{{ 'Muto Hut - Blog' }}{{/block}}
+
+{{block 'body'}}
+<section class="container pt-3">
+  <ul class="list-unstyled">
+    {{ each topics }}
+    <li class="media">
+      <img
+        width="40"
+        height="40"
+        class="mr-3"
+        src="../public/img/myphoto.png"
+        alt="..."
+      />
+      <div class="media-body">
+        <a class="mt-0 mb-1 h5" href="/topics/{{ $value.id }}">{{
+          $value.title
+        }}</a>
+        <h6>{{ $value.sectionDescription }}</h6>
+      </div>
+    </li>
+    {{ /each }}
+    <li class="media">
+      <img
+        width="40"
+        height="40"
+        class="mr-3"
+        src="../public/img/myphoto.png"
+        alt="..."
+      />
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">Media heading</h5>
+        Lex answers this question • 2 people followed • 1 reply • 187 views •
+        2017-10-20 13:45
+      </div>
+    </li>
+  </ul>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+</section>
+{{/block}}

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light pr-5 pl-5">
+  <a class="navbar-brand" href="/">Muto Hut</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <form class="form-inline mr-auto">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </form>
+    <ul class="navbar-nav my-2 my-lg-0">
+      {{ if user }}
+      <li class="nav-item mr-2">
+        <a class="btn btn-outline-success my-2 my-sm-0" href="/topics/new"
+          >Post</a
+        >
+      </li>
+      {{ else }}
+      <li class="nav-item mr-2">
+        <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Login</a>
+      </li>
+      <li class="nav-item mr-2">
+        <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
+          >Register</a
+        >
+      </li>
+      {{ /if }}
+      {{ if user }}
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          ><img
+            width="20"
+            height="20"
+            src="../../public/img/myphoto.png"
+            alt=""
+          />
+          <span class="caret"></span>
+        </a>
+        <div
+          class="dropdown-menu dropdown-menu-right"
+          aria-labelledby="navbarDropdownMenuLink"
+        >
+          <span class="dropdown-item-text"
+            >Current user: {{ user.username }}</span
+          >
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Personal Homepage</a>
+          <a class="dropdown-item" href="/settings/profile">Settings</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+      {{ /if }}
+    </ul>
+  </div>
+</nav>

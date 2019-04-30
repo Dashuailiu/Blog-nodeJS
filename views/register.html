@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registration</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="/public/css/login.css" />
+  </head>
+
+  <body>
+    <div class="main">
+      <div class="header">
+        <a href="/">
+          <img src="/public/img/logo32.png" alt="" />
+        </a>
+        <h1>Join Muto Hut</h1>
+      </div>
+      <form id="register_form" method="post" action="/register">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            autofocus
+          />
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Pick a username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Create a password"
+          />
+        </div>
+        <button type="submit" class="btn btn-success btn-block">
+          Sign up for Muto Hut
+        </button>
+      </form>
+      <div class="message">
+        <p>Account already? <a href="/login">Sign in</a>.</p>
+      </div>
+    </div>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script>
+      $('#register_form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+          url: '/register',
+          type: 'post',
+          data: formData,
+          dataType: 'json',
+          success: function(data) {
+            console.log(data);
+            var err_code = data.err_code;
+            if (err_code === 0) {
+              window.location.href = '/';
+            } else {
+              window.alert(data.message);
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

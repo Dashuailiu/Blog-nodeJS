@@ -1,0 +1,66 @@
+{{extend '../_layouts/home.html'}}
+
+{{block 'title'}}{{ 'Muto Hut' }}{{/block}}
+
+{{block 'body'}}
+<section class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <form id="post_topic_form">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Choose section</label>
+          <select class="form-control" name="section">
+            <option value="1">Share</option>
+            <option value="2">Questions and answers</option>
+            <option value="3">Recruitment</option>
+            <option value="4">Client testing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputTitle">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputTitle"
+            name="title"
+            placeholder="Title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputContent">Content</label>
+          <textarea
+            class="form-control"
+            id="exampleInputContent"
+            name="content"
+            rows="3"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $('#post_topic_form').on('submit', function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+      url: '/topics/new',
+      type: 'post',
+      data: formData,
+      dataType: 'json',
+      success: function(data) {
+        var err_code = data.err_code;
+        if (err_code === 0) {
+          window.location.href = '/';
+        } else {
+          window.alert(data.message);
+        }
+      }
+    });
+  });
+</script>
+{{/block}}
