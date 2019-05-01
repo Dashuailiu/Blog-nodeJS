@@ -22,9 +22,17 @@ var topicSchema = new Schema({
     type: String,
     required: true
   },
+  commentCount: {
+    type: Number,
+    default: 0
+  },
   viewCount: {
     type: Number,
     default: 0
+  },
+  lastUser: {
+    type: String,
+    default: ''
   },
   createdTime: {
     type: Date,

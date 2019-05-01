@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light pr-5 pl-5">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light pr-5 pl-5"> -->
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg pr-5 pl-5">
   <a class="navbar-brand" href="/">Muto Hut</a>
   <button
     class="navbar-toggler"
@@ -14,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <form class="form-inline mr-auto">
       <input
-        class="form-control mr-sm-2"
+        class="form-control mr-sm-2 topic_hidden"
         type="search"
         placeholder="Search"
         aria-label="Search"
@@ -22,7 +23,7 @@
     </form>
     <ul class="navbar-nav my-2 my-lg-0">
       {{ if user }}
-      <li class="nav-item mr-2">
+      <li class="nav-item mr-2 topic_hidden">
         <a class="btn btn-outline-success my-2 my-sm-0" href="/topics/new"
           >Post</a
         >
@@ -72,3 +73,16 @@
     </ul>
   </div>
 </nav>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  if (window.location.pathname.indexOf('topics') !== -1) {
+    $('.topic_hidden').each(function(index, item) {
+      item.style.display = 'none';
+    });
+  } else {
+    $('.topic_hidden').each(function(index, item) {
+      item.style.display = 'block';
+    });
+  }
+</script>

@@ -4,48 +4,54 @@
 
 {{block 'body'}}
 <section class="container pt-3">
-  <ul class="list-unstyled">
-    {{ each topics }}
-    <li class="media">
-      <img
-        width="40"
-        height="40"
-        class="mr-3"
-        src="../public/img/myphoto.png"
-        alt="..."
-      />
-      <div class="media-body">
-        <a class="mt-0 mb-1 h5" href="/topics/{{ $value.id }}">{{
-          $value.title
-        }}</a>
-        <h6>{{ $value.sectionDescription }}</h6>
+  <div class="panel">
+    <div class="inner">
+      <div id="topic_list">
+        {{ each topics }}
+        <div class="cell">
+          <a class="user_avatar float-left" href="#">
+            <img src="../public/img/user2.png" />
+          </a>
+          <span class="reply_count float-left">
+            <span class="count_of_replies">
+              {{ $value.commentCount }}
+            </span>
+            <span class="count_seperator">/</span>
+            <span class="count_of_visits">
+              {{ $value.viewCount }}
+            </span>
+          </span>
+          <a class="last_time float-right" href="/topics/{{ $value.id }}">
+            <img class="user_small_avatar" src="../public/img/user2.png" />
+            <span class="last_active_time">{{ $value.lastModifiedTime }}</span>
+          </a>
+          <div class="topic_wrapper">
+            <span class="top_sec">Q</span>
+            <a class="topic_title" href="/topics/{{ $value.id }}">{{
+              $value.title
+            }}</a>
+          </div>
+        </div>
+        {{ /each }}
       </div>
-    </li>
-    {{ /each }}
-    <li class="media">
-      <img
-        width="40"
-        height="40"
-        class="mr-3"
-        src="../public/img/myphoto.png"
-        alt="..."
-      />
-      <div class="media-body">
-        <h5 class="mt-0 mb-1">Media heading</h5>
-        Lex answers this question • 2 people followed • 1 reply • 187 views •
-        2017-10-20 13:45
-      </div>
-    </li>
-  </ul>
-
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-  </nav>
+    </div>
+    <nav id="page" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </section>
 {{/block}}

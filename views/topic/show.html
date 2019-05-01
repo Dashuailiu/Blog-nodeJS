@@ -4,6 +4,10 @@
 
 {{block 'head'}}
 <link rel="stylesheet" href="/public/css/markdown-github.css" />
+<link
+  rel="stylesheet"
+  href="/public/lib/open-iconic-master/font/css/open-iconic-bootstrap.css"
+/>
 <style>
   .panel .panel-heading .action i {
     margin-right: 10px;
@@ -12,219 +16,100 @@
 {{/block}}
 
 {{block 'body'}}
-<section class="container">
-  <div class="row">
-    <div class="col-md-9">
-      <article class="markdown-body">
-        <h1 id="_1">
-          <a
-            name="user-content-_1"
-            href="#_1"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >测试
-        </h1>
-        <blockquote>
-          <p>杨柳青青江水平</p>
-        </blockquote>
-        <h2 id="_2">
-          <a
-            name="user-content-_2"
-            href="#_2"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >起步
-        </h2>
-        <ul>
-          <li>123</li>
-          <li>456</li>
-          <li>789</li>
-        </ul>
-        <h3 id="_3">
-          <a
-            name="user-content-_3"
-            href="#_3"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >哈哈哈
-        </h3>
-        <p>然后这里就开始 <code>hello world</code> ，就用可以了。</p>
-        <p>下面是一段代码：</p>
-        <pre><code class="javascript">var foo = 'bar'
-  console.log(foo)
-  </code></pre>
-        <h3 id="_4">
-          <a
-            name="user-content-_4"
-            href="#_4"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >嘿嘿
-        </h3>
-        <h3 id="_5">
-          <a
-            name="user-content-_5"
-            href="#_5"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >呼呼
-        </h3>
-        <h2 id="_6">
-          <a
-            name="user-content-_6"
-            href="#_6"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >是什么
-        </h2>
-        <h2 id="_7">
-          <a
-            name="user-content-_7"
-            href="#_7"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >为什么
-        </h2>
-        <h2 id="_8">
-          <a
-            name="user-content-_8"
-            href="#_8"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >怎么做
-        </h2>
-        <h2 id="_9">
-          <a
-            name="user-content-_9"
-            href="#_9"
-            class="headeranchor-link"
-            aria-hidden="true"
-            ><span class="headeranchor"></span></a
-          >哈哈哈
-        </h2>
-      </article>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span>lipengzhou</span> commented
-          <span>24 minutes ago</span>
-          <span class="action">
-            <a href=""
-              ><i class="glyphicon glyphicon-thumbs-up pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-          </span>
-        </div>
-        <div class="panel-body">
-          评论测试
+<section class="container pt-3">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <span class="top_sec">Q</span> {{ topic.title }}
+      </h5>
+      <div class="card-subtitle mb-2 text-muted">
+        <div class="topic-subtitle">
+          <span> {{ topic.createdTime }}</span>
+          <span>
+            Author <a href="#">{{ topic.author }}</a></span
+          >
+          <span> {{ topic.viewCount }} views</span>
+          <span> From {{ topic.section }}</span>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span>lipengzhou</span> commented
-          <span>24 minutes ago</span>
-          <span class="action">
-            <a href=""
-              ><i class="glyphicon glyphicon-thumbs-up pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-          </span>
-        </div>
-        <div class="panel-body">
-          评论测试
+      <div class="card-text content-style pt-1">
+        <div class="markdown-body">
+          <p>{{ topic.content }}</p>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span>lipengzhou</span> commented
-          <span>24 minutes ago</span>
-          <span class="action">
-            <a href=""
-              ><i class="glyphicon glyphicon-thumbs-up pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-          </span>
-        </div>
-        <div class="panel-body">
-          评论测试
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span>lipengzhou</span> commented
-          <span>24 minutes ago</span>
-          <span class="action">
-            <a href=""
-              ><i class="glyphicon glyphicon-thumbs-up pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-          </span>
-        </div>
-        <div class="panel-body">
-          评论测试
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span>lipengzhou</span> commented
-          <span>24 minutes ago</span>
-          <span class="action">
-            <a href=""
-              ><i class="glyphicon glyphicon-thumbs-up pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-            <a href=""
-              ><i class="glyphicon glyphicon-remove-circle pull-right"></i
-            ></a>
-          </span>
-        </div>
-        <div class="panel-body">
-          评论测试
-        </div>
-      </div>
-      <hr />
+    </div>
+  </div>
+
+  <div id="addComment" class="card mt-3">
+    <div class="block-style-header">
+      <span>Add a new comment</span>
+    </div>
+    <div class="card-body pl-3 pt-2 pb-3">
       <form>
-        <div class="form-group">
-          <label for="exampleInputPassword1">添加回复</label>
+        <div class="form-group mb-2">
           <textarea
             class="form-control"
-            name=""
-            id=""
-            cols="10"
-            rows="10"
+            name="commentContent"
+            id="formControlComment"
+            rows="4"
           ></textarea>
         </div>
-        <button type="submit" class="btn btn-success">回复</button>
+        <button type="submit" class="btn btn-primary">Reply</button>
       </form>
+    </div>
+  </div>
+
+  <div id="Comments" class="card mt-3">
+    <div class="block-style-header">
+      <span>{{ topic.commentCount }} Comments</span>
+    </div>
+
+    <div class="cell-content pr-3" id="asdasdas11231">
+      <div class="user-content">
+        <a href="#" class="user-avatar float-left">
+          <img src="../public/img/user1.jpeg" />
+        </a>
+        <div class="user-info">
+          <a class="reply-author" href="#">Username</a>
+          <a class="reply-time" href="#">• commentTime</a>
+        </div>
+        <div class="user-action float-right">
+          <span class="oi oi-thumb-up"></span>
+          <span class="up-count">10</span>
+        </div>
+      </div>
+      <div class="reply-content">
+        <div class="markdown-body">
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cell-content pr-3" id="asdasdas11231">
+      <div class="user-content">
+        <a href="#" class="user-avatar float-left">
+          <img src="../public/img/user1.jpeg" />
+        </a>
+        <div class="user-info">
+          <a class="reply-author" href="#">Username</a>
+          <a class="reply-time" href="#">• commentTime</a>
+        </div>
+        <div class="user-action float-right">
+          <span class="oi oi-thumb-up"></span>
+          <span class="up-count">10</span>
+        </div>
+      </div>
+      <div class="reply-content">
+        <div class="markdown-body">
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+          <p>asdasdasdasdasdasd</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

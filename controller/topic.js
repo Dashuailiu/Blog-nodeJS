@@ -43,7 +43,12 @@ module.exports = {
   },
   getTopicById: async function(req, res) {
     try {
-      let topic = await Topic.findById(req.params.id);
+      let topic = await Topic.findById(req.params.topic_id);
+      console.log(req.params.topic_id, topic);
+      res.render('./topic/show.html', {
+        user: req.session.user,
+        topic: topic
+      });
     } catch (err) {
       return res.status(500).json({
         err_code: 500,

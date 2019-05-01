@@ -2,14 +2,14 @@
 
 ```bash
 .
-|--controllers				##
-|--models							## 
+|--controllers        ##
+|--models             ## 
 |--node_modules       ## 3rd-party packages
-|--public							## Public static resources
-|--views							## All html views
-|--routes							##
-|--README.md					## Project description
-|--app.js							## Entry file
+|--public             ## Public static resources
+|--views              ## All html views
+|--routes             ##
+|--README.md          ## Project description
+|--app.js             ## Entry file
 |--package.json
 |--package-lock.json
 ```

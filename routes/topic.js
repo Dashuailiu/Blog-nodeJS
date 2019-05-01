@@ -10,6 +10,7 @@ router
       user: req.session.user
     });
   })
-  .post('/topics/new', topicController.postTopic);
+  .post('/topics/new', topicController.postTopic)
+  .get('/topics/:topic_id', topicController.getTopicById);
 
 module.exports = router;
