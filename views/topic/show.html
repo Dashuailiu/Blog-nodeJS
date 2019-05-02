@@ -82,7 +82,7 @@
           >
         </div>
         <div class="user-action float-right">
-          <span class="oi oi-thumb-up up-btn"></span>
+          <span class="oi oi-thumb-up up-btn {{ $value.uped }}"></span>
           <span class="up-count">{{ $value.upCount }}</span>
         </div>
       </div>
@@ -100,33 +100,37 @@
 <script>
   $('.up-btn').click(function(e) {
     e.preventDefault();
-    var comment_id = $(this)
-      .closest('.comment_area')
-      .attr('id');
-    console.log(comment_id);
+    var $this = $(this);
+    var comment_id = $this.closest('.comment_area').attr('id');
+
     $.ajax({
       url: '/comment/' + comment_id + '/upcount',
       type: 'post',
+      dataType: 'json',
       success: function(data) {
         var err_code = data.err_code;
         if (err_code === 0) {
           var currentCount =
             Number(
-              $(this)
+              $this
                 .next('.up-count')
                 .text()
                 .trim()
             ) || 0;
-          console.log($(this).attr);
-          $(this)
-            .next('.up-count')
-            .text(currentCount + 1);
+
+          if (data.action === 'up') {
+            $this.addClass('uped');
+            $this.next('.up-count').text(currentCount + 1);
+          } else {
+            $this.removeClass('uped');
+            $this.next('.up-count').text(currentCount - 1);
+          }
         } else {
           window.alert(data.message);
         }
       },
       error: function(err) {
-        window.alert(data.message);
+        window.alert(err.responseJSON.message);
       }
     });
   });

@@ -232,3 +232,13 @@ body .markdown-body {
   cursor: pointer;
   opacity: 0.4;
 }
+
+.up-btn:hover {
+  color: #000;
+  opacity: 0.6;
+}
+
+span.oi.oi-thumb-up.up-btn.uped {
+  color: #000;
+  opacity: 1;
+}

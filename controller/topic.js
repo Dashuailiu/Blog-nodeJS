@@ -89,6 +89,10 @@ module.exports = {
             path: 'publisher'
           }
         });
+
+      topic.viewCount++;
+      await topic.save();
+
       //console.log(req.params.topic_id, topic);
       let topicShowObj = {
         //* Topic render
@@ -107,7 +111,8 @@ module.exports = {
 
       //* Comment render
       let commentsObj = [];
-      console.log(topic);
+      let user_id = req.session.user ? req.session.user._id : null;
+
       topic.comments.forEach(c => {
         commentsObj.push({
           id: c.id,
@@ -116,6 +121,7 @@ module.exports = {
           publisher_name: c.publisher.username,
           //TODO replace later
           publisher_avatar: c.publisher.avatar,
+          uped: c.upCountUser.indexOf(user_id) === -1 ? '' : 'uped',
           upCount: c.upCount,
           createdTime: sDateTime.fromNow(c.createdTime)
         });

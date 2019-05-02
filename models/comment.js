@@ -29,6 +29,12 @@ var commentSchema = new Schema({
     type: Number,
     default: 0
   },
+  upCountUser: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   createdTime: {
     type: Date,
     default: Date.now()
