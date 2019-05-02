@@ -10,7 +10,7 @@
         <div class="form-group">
           <label for="exampleInputEmail1">Choose section</label>
           <select class="form-control" name="section">
-            <option value="1">Share</option>
+            <option value="1">Sharing</option>
             <option value="2">Questions and answers</option>
             <option value="3">Recruitment</option>
             <option value="4">Client testing</option>
@@ -23,6 +23,7 @@
             class="form-control"
             id="exampleInputTitle"
             name="title"
+            minlength="1"
             placeholder="Title"
           />
         </div>
@@ -33,6 +34,7 @@
             id="exampleInputContent"
             name="content"
             rows="3"
+            minlength="5"
           ></textarea>
         </div>
         <button type="submit" class="btn btn-success">Submit</button>

@@ -227,3 +227,8 @@ body .markdown-body {
   border: 0 !important;
   padding: 0 !important;
 }
+
+.up-btn {
+  cursor: pointer;
+  opacity: 0.4;
+}

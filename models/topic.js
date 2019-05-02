@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
+var User = require('./user');
+var Comment = require('./comment');
 
+var UserSchema = User.schema;
+var CommentSchema = Comment.schema;
 mongoose.connect('mongodb://localhost/mutohut');
 
 var Schema = mongoose.Schema;
@@ -18,21 +22,20 @@ var topicSchema = new Schema({
     enum: [1, 2, 3, 4],
     required: true
   },
-  publisher: {
-    type: String,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
-  commentCount: {
-    type: Number,
-    default: 0
-  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
   viewCount: {
     type: Number,
     default: 0
-  },
-  lastUser: {
-    type: String,
-    default: ''
   },
   createdTime: {
     type: Date,

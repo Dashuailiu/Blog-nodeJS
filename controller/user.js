@@ -1,12 +1,12 @@
 var md5 = require('blueimp-md5');
-var User = require('../models/user');
+var UserModel = require('../models/user');
 
 module.exports = {
   login: async function(req, res) {
     //TODO login action
     var loginUser = req.body;
     try {
-      let user = await User.findOne({
+      let user = await UserModel.findOne({
         email: loginUser.email,
         password: md5(md5(loginUser.password))
       });
@@ -37,14 +37,14 @@ module.exports = {
   register: async function(req, res) {
     var user = req.body;
     try {
-      if (await User.findOne({ email: user.email })) {
+      if (await UserModel.findOne({ email: user.email })) {
         return res.status(200).json({
           err_code: 1,
           message: 'Email is already taken.'
         });
       }
 
-      if (await User.findOne({ username: user.username })) {
+      if (await UserModel.findOne({ username: user.username })) {
         return res.status(200).json({
           err_code: 2,
           message: 'Username is already taken.'
@@ -52,7 +52,7 @@ module.exports = {
       }
 
       user.password = md5(md5(user.password));
-      await new User(user).save();
+      await new UserModel(user).save();
 
       req.session.user = user;
 

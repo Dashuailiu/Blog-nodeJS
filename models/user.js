@@ -38,7 +38,7 @@ var userSchema = new Schema({
   },
   bio: {
     type: String,
-    default: ''
+    default: '"This guy is so lazy. He didn\'t leave any signature."'
   },
   commentStatus: {
     //* Allowed to comment?

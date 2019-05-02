@@ -6,14 +6,7 @@ var topicController = require('../controller/topic');
 var router = express.Router();
 
 router
-  .get('/', async function(req, res) {
-    let topics = await topicController.getAllTopics(req, res);
-    console.log(topics);
-    res.render('index.html', {
-      user: req.session.user,
-      topics: topics
-    });
-  })
+  .get('/', topicController.getAllTopics)
   .get('/login', function(req, res) {
     res.render('login.html');
   })

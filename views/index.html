@@ -10,7 +10,7 @@
         {{ each topics }}
         <div class="cell">
           <a class="user_avatar float-left" href="#">
-            <img src="../public/img/user2.png" />
+            <img src="{{ $value.authorAvatar }}" />
           </a>
           <span class="reply_count float-left">
             <span class="count_of_replies">
@@ -22,11 +22,17 @@
             </span>
           </span>
           <a class="last_time float-right" href="/topics/{{ $value.id }}">
-            <img class="user_small_avatar" src="../public/img/user2.png" />
-            <span class="last_active_time">{{ $value.lastModifiedTime }}</span>
+            {{ if $value.lastAuthorAvatar }}
+            <img
+              class="user_small_avatar"
+              src="{{ $value.lastAuthorAvatar }}"
+              alt=".."
+            />
+            {{ /if }}
+            <span class="last_active_time">{{ $value.lastCommentTime }}</span>
           </a>
           <div class="topic_wrapper">
-            <span class="top_sec">Q</span>
+            <span class="top_sec">{{ $value.sectionDescription }}</span>
             <a class="topic_title" href="/topics/{{ $value.id }}">{{
               $value.title
             }}</a>

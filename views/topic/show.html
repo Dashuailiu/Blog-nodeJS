@@ -45,13 +45,14 @@
       <span>Add a new comment</span>
     </div>
     <div class="card-body pl-3 pt-2 pb-3">
-      <form>
+      <form action="/{{ topic.id }}/comment" method="post">
         <div class="form-group mb-2">
           <textarea
             class="form-control"
-            name="commentContent"
+            name="content"
             id="formControlComment"
             rows="4"
+            minlength="1"
           ></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Reply</button>
@@ -63,54 +64,71 @@
     <div class="block-style-header">
       <span>{{ topic.commentCount }} Comments</span>
     </div>
-
-    <div class="cell-content pr-3" id="asdasdas11231">
+    {{ each comments }}
+    <div class="cell-content pr-3 comment_area" id="{{ $value.id }}">
       <div class="user-content">
-        <a href="#" class="user-avatar float-left">
-          <img src="../public/img/user1.jpeg" />
+        <a
+          href="/users/{{ $value.publisher_id }}"
+          class="user-avatar float-left"
+        >
+          <img src="{{ $value.publisher_avatar }}" />
         </a>
         <div class="user-info">
-          <a class="reply-author" href="#">Username</a>
-          <a class="reply-time" href="#">• commentTime</a>
+          <a class="reply-author" href="/users/{{ $value.publisher_id }}">{{
+            $value.publisher_name
+          }}</a>
+          <a class="reply-time" href="/topics/{{ topic.id }}#{{ $value.id }}"
+            >• {{ $value.createdTime }}</a
+          >
         </div>
         <div class="user-action float-right">
-          <span class="oi oi-thumb-up"></span>
-          <span class="up-count">10</span>
+          <span class="oi oi-thumb-up up-btn"></span>
+          <span class="up-count">{{ $value.upCount }}</span>
         </div>
       </div>
       <div class="reply-content">
         <div class="markdown-body">
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
+          {{ $value.content }}
         </div>
       </div>
     </div>
-
-    <div class="cell-content pr-3" id="asdasdas11231">
-      <div class="user-content">
-        <a href="#" class="user-avatar float-left">
-          <img src="../public/img/user1.jpeg" />
-        </a>
-        <div class="user-info">
-          <a class="reply-author" href="#">Username</a>
-          <a class="reply-time" href="#">• commentTime</a>
-        </div>
-        <div class="user-action float-right">
-          <span class="oi oi-thumb-up"></span>
-          <span class="up-count">10</span>
-        </div>
-      </div>
-      <div class="reply-content">
-        <div class="markdown-body">
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
-          <p>asdasdasdasdasdasd</p>
-        </div>
-      </div>
-    </div>
+    {{ /each }}
   </div>
 </section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $('.up-btn').click(function(e) {
+    e.preventDefault();
+    var comment_id = $(this)
+      .closest('.comment_area')
+      .attr('id');
+    console.log(comment_id);
+    $.ajax({
+      url: '/comment/' + comment_id + '/upcount',
+      type: 'post',
+      success: function(data) {
+        var err_code = data.err_code;
+        if (err_code === 0) {
+          var currentCount =
+            Number(
+              $(this)
+                .next('.up-count')
+                .text()
+                .trim()
+            ) || 0;
+          console.log($(this).attr);
+          $(this)
+            .next('.up-count')
+            .text(currentCount + 1);
+        } else {
+          window.alert(data.message);
+        }
+      },
+      error: function(err) {
+        window.alert(data.message);
+      }
+    });
+  });
+</script>
 {{/block}}

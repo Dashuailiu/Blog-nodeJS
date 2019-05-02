@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const routeSession = require('./routes/user');
 const routeTopic = require('./routes/topic');
+const routeComment = require('./routes/comment');
 const session = require('express-session');
 
 //! constant variables
@@ -49,6 +50,7 @@ app.use(
 //! Route table
 app.use(routeSession);
 app.use(routeTopic);
+app.use(routeComment);
 
 app.listen(portNo, function() {
   console.log(`Running on port ${portNo}....`);
