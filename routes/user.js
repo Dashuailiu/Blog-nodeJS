@@ -15,7 +15,8 @@ router
     res.render('register.html');
   })
   .post('/register', userController.register)
-  .get('/logout', userController.logout);
+  .get('/logout', userController.logout)
+  .get('/users/:user_id', userController.renderPersonalPage);
 
 //#region
 // .post('/register', function(req, res) {

@@ -1,7 +1,12 @@
-.profile-avatar dt {
-  margin-bottom: 10px;
+.header .divider {
+  padding: 0 5px;
+  color: #ccc;
 }
 
-.profile-avatar .avatar {
-  margin-bottom: 10px;
+.col-fade {
+  color: #ababab;
+}
+
+.panel {
+  margin-bottom: 13px !important;
 }

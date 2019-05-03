@@ -27,10 +27,26 @@ var topicSchema = new Schema({
     ref: 'User',
     required: true
   },
+  lastUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Comment'
+    }
+  ],
+  commentUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  upUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     }
   ],
   viewCount: {

@@ -9,7 +9,7 @@
       <div id="topic_list">
         {{ each topics }}
         <div class="cell">
-          <a class="user_avatar float-left" href="#">
+          <a class="user-avatar float-left" href="/users/{{ $value.authorId }}">
             <img src="{{ $value.authorAvatar }}" />
           </a>
           <span class="reply_count float-left">

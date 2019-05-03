@@ -8,6 +8,9 @@ var router = express.Router();
 
 router
   .post('/:topic_id/comment', commentController.addCommentByTopicId)
-  .post('/comment/:comment_id/upcount', commentController.upCountByCommentId);
+  .post(
+    '/topic/:topic_id/comment/:comment_id/upcount',
+    commentController.upCountByCommentId
+  );
 
 module.exports = router;

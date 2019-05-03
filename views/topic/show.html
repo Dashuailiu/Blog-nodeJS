@@ -18,7 +18,7 @@
 {{block 'body'}}
 <section class="container pt-3">
   <div class="card">
-    <div class="card-body">
+    <div class="card-body topic_area" id="{{ topic.id }}">
       <h5 class="card-title">
         <span class="top_sec">Q</span> {{ topic.title }}
       </h5>
@@ -102,9 +102,10 @@
     e.preventDefault();
     var $this = $(this);
     var comment_id = $this.closest('.comment_area').attr('id');
+    var topic_id = $this.closest('.topic_area').attr('id');
 
     $.ajax({
-      url: '/comment/' + comment_id + '/upcount',
+      url: '/topic/' + topic_id + '/comment/' + comment_id + '/upcount',
       type: 'post',
       dataType: 'json',
       success: function(data) {

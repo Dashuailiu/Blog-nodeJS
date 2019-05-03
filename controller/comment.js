@@ -1,25 +1,27 @@
 var CommentModel = require('../models/comment');
-var TopicModel = require('../models/topic');
+var TopicController = require('../controller/topic');
 
 module.exports = {
   addCommentByTopicId: async function(req, res) {
     try {
-      if (!req.session.user) {
+      let currentUser = req.session.user;
+      if (!currentUser) {
         return res.render('login.html');
       }
 
       let comment = req.body;
       let topic_id = req.params.topic_id;
-      comment.publisher = req.session.user._id;
+      comment.publisher = currentUser._id;
       let commentRet = await new CommentModel(comment).save();
 
-      await TopicModel.findByIdAndUpdate(topic_id, {
-        $push: {
-          comments: commentRet._id
-        }
-      });
+      TopicController.addCommentToTopic(
+        topic_id,
+        commentRet._id,
+        currentUser._id
+      );
       res.redirect(`/topics/${topic_id}#${commentRet._id}`);
     } catch (err) {
+      console.log(err);
       return res.status(500).json({
         err_code: 500,
         message: 'Internet Error.'
@@ -52,6 +54,8 @@ module.exports = {
       }
 
       await comment.save();
+
+      TopicController.countUp(req.params.topic_id, currentUser._id, action);
       // await CommentModel.findByIdAndUpdate(req.params.comment_id, {
       //   $inc: { upCount: 1 }
       // });

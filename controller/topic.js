@@ -8,6 +8,30 @@ const sectionMapping = {
   4: 'Client testing'
 };
 
+function serializeTopicList(topicList) {
+  let TopicsObj = [];
+  topicList.forEach(t => {
+    let lastComment = t.comments.length
+      ? t.comments[t.comments.length - 1]
+      : null;
+
+    TopicsObj.push({
+      id: t.id,
+      authorId: t.author.id,
+      authorAvatar: t.author.avatar,
+      lastAuthorAvatar: lastComment ? lastComment.publisher.avatar : '',
+      viewCount: t.viewCount,
+      lastCommentTime: lastComment
+        ? sDateTime.fromNow(lastComment.createdTime)
+        : sDateTime.fromNow(t.lastModifiedTime),
+      title: t.title,
+      sectionDescription: sectionMapping[t.section][0],
+      commentCount: t.comments.length
+    });
+  });
+  return TopicsObj;
+}
+
 module.exports = {
   //TODO post a topic
   postTopic: async function(req, res) {
@@ -45,29 +69,10 @@ module.exports = {
           }
         });
 
-      let topicsObj = [];
-
-      topics.forEach(t => {
-        let lastComment = t.comments.length
-          ? t.comments[t.comments.length - 1]
-          : null;
-
-        topicsObj.push({
-          id: t.id,
-          authorAvatar: t.author.avatar,
-          lastAuthorAvatar: lastComment ? lastComment.publisher.avatar : '',
-          viewCount: t.viewCount,
-          lastCommentTime: lastComment
-            ? sDateTime.fromNow(lastComment.createdTime)
-            : sDateTime.fromNow(t.lastModifiedTime),
-          title: t.title,
-          sectionDescription: sectionMapping[t.section][0],
-          commentCount: t.comments.length
-        });
-      });
+      let topicsObj = serializeTopicList(topics);
 
       res.render('index.html', {
-        user: req.session.user,
+        currentUser: req.session.user,
         topics: topicsObj
       });
     } catch (err) {
@@ -128,7 +133,7 @@ module.exports = {
       });
 
       res.render('./topic/show.html', {
-        user: req.session.user,
+        currentUser: req.session.user,
         topic: topicShowObj,
         comments: commentsObj
       });
@@ -138,5 +143,59 @@ module.exports = {
         message: 'Internet Error.'
       });
     }
-  }
+  },
+  addCommentToTopic: async function(topic_id, comment_id, user_id) {
+    await TopicModel.findByIdAndUpdate(topic_id, {
+      $push: {
+        comments: comment_id
+      },
+      $addToSet: {
+        commentUsers: user_id
+      },
+      lastUser: user_id
+    });
+  },
+  countUp: async function(topic_id, user_id, upAction = 'up') {
+    if (upAction === 'up') {
+      await TopicModel.findByIdAndUpdate(topic_id, {
+        $addToSet: {
+          upUsers: user_id
+        },
+        lastUser: user_id
+      });
+    } else {
+      await TopicModel.findByIdAndUpdate(topic_id, {
+        $pull: {
+          upUsers: user_id
+        }
+      });
+    }
+  },
+  getAllCreatedTopicsByUserId: async function(user_id) {
+    return await TopicModel.find({
+      author: user_id
+    })
+      .populate('author')
+      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'publisher'
+        }
+      });
+  },
+  getAllParticipatedTopicsByUserId: async function(user_id) {
+    return await TopicModel.find({
+      $or: [{ upUsers: user_id }, { commentUsers: user_id }]
+    })
+      .populate('author')
+      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'publisher'
+        }
+      });
+  },
+  serializeTopicList: serializeTopicList
 };

@@ -22,7 +22,7 @@
       />
     </form>
     <ul class="navbar-nav my-2 my-lg-0">
-      {{ if user }}
+      {{ if currentUser }}
       <li class="nav-item mr-2 topic_hidden">
         <a class="btn btn-outline-success my-2 my-sm-0" href="/topics/new"
           >Post</a
@@ -38,11 +38,11 @@
         >
       </li>
       {{ /if }}
-      {{ if user }}
+      {{ if currentUser }}
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
-          href="#"
+          href="/users/{{ currentUser._id }}"
           id="navbarDropdownMenuLink"
           role="button"
           data-toggle="dropdown"
@@ -61,10 +61,12 @@
           aria-labelledby="navbarDropdownMenuLink"
         >
           <span class="dropdown-item-text"
-            >Current user: {{ user.username }}</span
+            >Current user: {{ currentUser.username }}</span
           >
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Personal Homepage</a>
+          <a class="dropdown-item" href="/users/{{ currentUser._id }}"
+            >Personal Homepage</a
+          >
           <a class="dropdown-item" href="/settings/profile">Settings</a>
           <a class="dropdown-item" href="/logout">Logout</a>
         </div>

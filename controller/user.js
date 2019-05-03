@@ -1,5 +1,7 @@
 var md5 = require('blueimp-md5');
+var sDateTime = require('silly-datetime');
 var UserModel = require('../models/user');
+var TopicController = require('./topic');
 
 module.exports = {
   login: async function(req, res) {
@@ -66,5 +68,34 @@ module.exports = {
         message: 'Internet Error.'
       });
     }
+  },
+  renderPersonalPage: async function(req, res) {
+    let user = await UserModel.findById(req.params.user_id);
+    if (!user) {
+      res.render('404.html');
+    }
+
+    let userObj = {
+      id: user.id,
+      username: user.username,
+      avatar: user.avatar,
+      bio: user.bio,
+      createdTime: sDateTime.fromNow(user.createdTime)
+    };
+
+    let creTopics = await TopicController.getAllCreatedTopicsByUserId(user.id);
+    let parTopics = await TopicController.getAllParticipatedTopicsByUserId(
+      user.id
+    );
+
+    let creTopicsObj = TopicController.serializeTopicList(creTopics);
+    let parTopicsObj = TopicController.serializeTopicList(parTopics);
+
+    res.render('./user/personal_page.html', {
+      user: userObj,
+      creTopics: creTopicsObj,
+      parTopics: parTopicsObj,
+      currentUser: req.session.user
+    });
   }
 };
