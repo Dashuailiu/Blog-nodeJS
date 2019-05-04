@@ -72,7 +72,20 @@
             console.log(data);
             var err_code = data.err_code;
             if (err_code === 0) {
-              window.location.href = '/';
+              var prevLink = document.referrer;
+              if ($.trim(prevLink) == '') {
+                window.location.href = '/';
+              } else {
+                if (prevLink.indexOf('127.0.0.1') == -1) {
+                  // not from other websites
+                  window.location.href = '/';
+                }
+                if (prevLink.indexOf('register') != -1) {
+                  // not from login page
+                  window.location.href = '/';
+                }
+                window.location.href = prevLink;
+              }
             } else {
               window.alert(data.message);
             }

@@ -42,18 +42,13 @@
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
-          href="/users/{{ currentUser._id }}"
+          href="/users/{{ currentUser.id }}"
           id="navbarDropdownMenuLink"
           role="button"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          ><img
-            width="20"
-            height="20"
-            src="../../public/img/myphoto.png"
-            alt=""
-          />
+          ><img class="user-avatar-25" src="{{ currentUser.avatar }}" alt="" />
           <span class="caret"></span>
         </a>
         <div
@@ -64,7 +59,7 @@
             >Current user: {{ currentUser.username }}</span
           >
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/users/{{ currentUser._id }}"
+          <a class="dropdown-item" href="/users/{{ currentUser.id }}"
             >Personal Homepage</a
           >
           <a class="dropdown-item" href="/settings/profile">Settings</a>
@@ -78,7 +73,10 @@
 
 <script src="/node_modules/jquery/dist/jquery.js"></script>
 <script>
-  if (window.location.pathname.indexOf('topics') !== -1) {
+  if (
+    window.location.pathname.indexOf('topics') !== -1 ||
+    window.location.pathname.indexOf('users')
+  ) {
     $('.topic_hidden').each(function(index, item) {
       item.style.display = 'none';
     });

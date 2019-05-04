@@ -4,60 +4,93 @@
 
 {{block 'body'}}
 <section class="container pt-3">
-  <div class="panel">
-    <div class="inner">
-      <div id="topic_list">
-        {{ each topics }}
-        <div class="cell">
-          <a class="user-avatar float-left" href="/users/{{ $value.authorId }}">
-            <img src="{{ $value.authorAvatar }}" />
+  <div id="sidebar" class="float-right">
+    {{ if currentUser }}
+    <div class="panel">
+      <div class="header">Current User</div>
+      <div class="inner userinfo">
+        <div class="float-left mr-2">
+          <a href="/users/{{ currentUser.id }}" }>
+            <img class="user-avatar" src="{{ currentUser.avatar }}" />
           </a>
-          <span class="reply_count float-left">
-            <span class="count_of_replies">
-              {{ $value.commentCount }}
-            </span>
-            <span class="count_seperator">/</span>
-            <span class="count_of_visits">
-              {{ $value.viewCount }}
-            </span>
-          </span>
-          <a class="last_time float-right" href="/topics/{{ $value.id }}">
-            {{ if $value.lastAuthorAvatar }}
-            <img
-              class="user_small_avatar"
-              src="{{ $value.lastAuthorAvatar }}"
-              alt=".."
-            />
-            {{ /if }}
-            <span class="last_active_time">{{ $value.lastCommentTime }}</span>
-          </a>
-          <div class="topic_wrapper">
-            <span class="top_sec">{{ $value.sectionDescription }}</span>
-            <a class="topic_title" href="/topics/{{ $value.id }}">{{
-              $value.title
-            }}</a>
-          </div>
         </div>
-        {{ /each }}
+        <a href="/users/{{ currentUser.id }}" }>
+          <span class="dark">{{ currentUser.username }}</span>
+        </a>
+        <div class="user-profile">
+          <span class="dark">{{ currentUser.bio }}</span>
+        </div>
       </div>
     </div>
-    <nav id="page" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    {{ /if }}
+  </div>
+
+  <div id="content">
+    <div class="panel">
+      <div class="header">
+        <a href="/?section=all" class="topic-tab current-tab">All</a>
+        <a href="/?section=good" class="topic-tab ">Sharing</a>
+        <a href="/?section=share" class="topic-tab ">Questions and answers</a>
+        <a href="/?section=ask" class="topic-tab ">Recruitment</a>
+        <a href="/?section=job" class="topic-tab ">Client testing</a>
+      </div>
+      <div class="inner no-padding">
+        <div id="topic_list">
+          {{ each topics }}
+          <div class="cell">
+            <a
+              class="user-avatar float-left"
+              href="/users/{{ $value.authorId }}"
+            >
+              <img src="{{ $value.authorAvatar }}" />
+            </a>
+            <span class="reply_count float-left">
+              <span class="count_of_replies">
+                {{ $value.commentCount }}
+              </span>
+              <span class="count_seperator">/</span>
+              <span class="count_of_visits">
+                {{ $value.viewCount }}
+              </span>
+            </span>
+            <a class="last_time float-right" href="/topics/{{ $value.id }}">
+              {{ if $value.lastAuthorAvatar }}
+              <img
+                class="user_small_avatar"
+                src="{{ $value.lastAuthorAvatar }}"
+                alt=".."
+              />
+              {{ /if }}
+              <span class="last_active_time">{{ $value.lastCommentTime }}</span>
+            </a>
+            <div class="topic_wrapper">
+              <span class="top_sec">{{ $value.sectionAbbre }}</span>
+              <a class="topic_title" href="/topics/{{ $value.id }}">{{
+                $value.title
+              }}</a>
+            </div>
+          </div>
+          {{ /each }}
+        </div>
+      </div>
+      <nav id="page" aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </section>
 {{/block}}

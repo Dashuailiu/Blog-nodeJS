@@ -1,16 +1,18 @@
 //* Registration, login, logout
 var express = require('express');
+
 var topicController = require('../controller/topic');
+var userController = require('../controller/user');
 
 var router = express.Router();
 
 router
-  .get('/topics/new', function(req, res) {
+  .get('/topics/new', userController.isLoggedIn, function(req, res) {
     res.render('./topic/new.html', {
-      user: req.session.user
+      currentUser: req.user
     });
   })
-  .post('/topics/new', topicController.postTopic)
+  .post('/topics/new', userController.isLoggedIn, topicController.postTopic)
   .get('/topics/:topic_id', topicController.getTopicById);
 
 module.exports = router;

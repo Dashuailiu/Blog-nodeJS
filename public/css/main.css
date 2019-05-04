@@ -8,6 +8,16 @@ body {
   margin-top: 5px;
 }
 
+.dropdown-menu-right {
+  margin: 0.5rem 0 0 !important;
+}
+
+.user-avatar-25 {
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+}
+
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
@@ -38,7 +48,11 @@ body {
 .panel .cell {
   padding-right: 10px;
   background: #fff;
-  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.panel .inner.no-padding {
+  padding: 0;
 }
 
 .panel .inner,
@@ -52,9 +66,15 @@ body {
   font-size: 14px;
   overflow: hidden;
 }
+
 .cell:hover {
   background: #f6f6f6;
 }
+
+.cell:last-child {
+  border-bottom: none;
+}
+
 .cell .reply_count {
   width: 70px;
   display: inline-block;
@@ -134,6 +154,12 @@ img {
   min-width: 50px;
   display: inline-block;
   white-space: nowrap;
+}
+
+.panel .inner {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 0 0 3px 3px;
 }
 
 .panel .inner a {
@@ -269,4 +295,44 @@ span.oi.oi-thumb-up.up-btn.uped {
 .user-profile {
   margin-top: 20px;
   clear: left;
+}
+.inner p {
+  font-size: 14px;
+  word-break: break-word;
+  margin: 0px !important;
+}
+
+#sidebar {
+  width: 290px;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#content {
+  margin-right: 305px;
+  padding: 0;
+}
+
+.dropdown-toggle::after {
+  vertical-align: 0px !important;
+}
+
+.topic-tab.current-tab {
+  background-color: #007bff;
+  color: #fff;
+  padding: 3px 4px;
+  border-radius: 3px;
+}
+
+.topic-tab {
+  margin: 0 10px;
+  color: #007bff;
+}
+
+.topic-tab:hover {
+  text-decoration: none;
+}
+
+#topic_list .cell:hover {
+  background: #f5f5f5;
 }

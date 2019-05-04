@@ -1,0 +1,161 @@
+{{extend '../_layouts/home.html'}}
+
+{{block 'title'}}{{ 'Muto Hut - blog' }}{{/block}}
+
+{{block 'body'}}
+<section class="container pt-3">
+  <div id="sidebar" class="float-right">
+    {{ if currentUser }}
+    <div class="panel">
+      <div class="header">Current User</div>
+      <div class="inner userinfo">
+        <div class="float-left mr-2">
+          <a href="/users/{{ currentUser._id }}" }>
+            <img class="user-avatar" src="{{ currentUser.avatar }}" />
+          </a>
+        </div>
+        <a href="/users/{{ currentUser.id }}" }>
+          <span class="dark">{{ currentUser.username }}</span>
+        </a>
+        <div class="user-profile">
+          <span class="dark">{{ currentUser.bio }}</span>
+        </div>
+      </div>
+    </div>
+    {{ /if }}
+  </div>
+
+  <div id="content">
+    <div class="panel">
+      <div class="header">
+        <a href="/">Return to homepage</a>
+        <span class="divider">/ Profile setting</span>
+      </div>
+      <div class="inner userinfo">
+        <form>
+          <div class="form-group">
+            <label for="usernameInputEmail">Email</label>
+            <p class="form-control-static">{{ currentUser.email }}</p>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Username</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder=""
+              value="{{ currentUser.username }}"
+            />
+          </div>
+
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-3 pt-0">
+                Gender
+              </legend>
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input
+                    type="hidden"
+                    id="userGender"
+                    value="{{ currentUser.gender || secret }}"
+                  />
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    id="gridRadios1"
+                    value="male"
+                  />
+                  <label class="form-check-label" for="gridRadios1">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    id="gridRadios2"
+                    value="female"
+                  />
+                  <label class="form-check-label" for="gridRadios2">
+                    Female
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    id="gridRadios3"
+                    value="secret"
+                  />
+                  <label class="form-check-label" for="gridRadios3">
+                    Secret
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Introduction</label>
+            <textarea class="form-control" id="bioInput" name="bio" rows="3">{{
+              currentUser.bio
+            }}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="ageInput">Age</label>
+            <input
+              type="number"
+              class="form-control"
+              name="age"
+              id="ageInput"
+              placeholder="Enter age"
+              value="{{ currentUser.age }}"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Profile</button>
+        </form>
+
+        <div class="col-md-2 profile-avatar">
+          <dl>
+            <dt>Photo setting</dt>
+            <dd>
+              <img
+                class="avatar"
+                width="150"
+                height="150"
+                src="{{ currentUser.avatar }}"
+                alt=""
+              />
+              <div>
+                <button class="btn btn-default" href="">
+                  Upload new picture
+                </button>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  let userGender = document.getElementById('userGender').value;
+  if (userGender === 'secret') {
+    document.getElementById('gridRadios3').checked = true;
+  } else if (userGender === 'female') {
+    document.getElementById('gridRadios2').checked = true;
+  }
+  {
+    document.getElementById('gridRadios1').checked = true;
+  }
+</script>
+{{/block}}

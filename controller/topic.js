@@ -8,26 +8,38 @@ const sectionMapping = {
   4: 'Client testing'
 };
 
+function serializeTopic(topic, general = false) {
+  let lastComment = topic.comments.length
+    ? topic.comments[topic.comments.length - 1]
+    : null;
+  let topicObj = {
+    id: topic.id,
+    title: topic.title,
+    authorId: topic.author.id,
+    authorName: topic.author.username,
+    authorAvatar: topic.author.avatar,
+    viewCount: topic.viewCount,
+    commentCount: topic.comments.length,
+    section: sectionMapping[topic.section],
+    sectionAbbre: sectionMapping[topic.section][0],
+    createdTime: sDateTime.fromNow(topic.createdTime)
+  };
+
+  if (general) {
+    topicObj.content = topic.content;
+  } else {
+    topicObj.lastAuthorAvatar = lastComment ? lastComment.publisher.avatar : '';
+    topicObj.lastCommentTime = lastComment
+      ? sDateTime.fromNow(lastComment.createdTime)
+      : sDateTime.fromNow(topic.lastModifiedTime);
+  }
+  return topicObj;
+}
+
 function serializeTopicList(topicList) {
   let TopicsObj = [];
   topicList.forEach(t => {
-    let lastComment = t.comments.length
-      ? t.comments[t.comments.length - 1]
-      : null;
-
-    TopicsObj.push({
-      id: t.id,
-      authorId: t.author.id,
-      authorAvatar: t.author.avatar,
-      lastAuthorAvatar: lastComment ? lastComment.publisher.avatar : '',
-      viewCount: t.viewCount,
-      lastCommentTime: lastComment
-        ? sDateTime.fromNow(lastComment.createdTime)
-        : sDateTime.fromNow(t.lastModifiedTime),
-      title: t.title,
-      sectionDescription: sectionMapping[t.section][0],
-      commentCount: t.comments.length
-    });
+    TopicsObj.push(serializeTopic(t));
   });
   return TopicsObj;
 }
@@ -36,11 +48,8 @@ module.exports = {
   //TODO post a topic
   postTopic: async function(req, res) {
     try {
-      if (!req.session.user) {
-        return res.render('login.html');
-      }
       var topic = req.body;
-      topic.author = req.session.user._id;
+      topic.author = req.user._id;
 
       await new TopicModel(topic).save();
       res.status(200).json({
@@ -72,7 +81,7 @@ module.exports = {
       let topicsObj = serializeTopicList(topics);
 
       res.render('index.html', {
-        currentUser: req.session.user,
+        currentUser: req.user,
         topics: topicsObj
       });
     } catch (err) {
@@ -99,24 +108,11 @@ module.exports = {
       await topic.save();
 
       //console.log(req.params.topic_id, topic);
-      let topicShowObj = {
-        //* Topic render
-        id: req.params.topic_id,
-        title: topic.title,
-        createdTime: sDateTime.fromNow(topic.createdTime),
-        section: sectionMapping[topic.section],
-        content: topic.content,
-        viewCount: topic.viewCount,
-        commentCount: topic.comments.length,
-
-        //* Topic author render
-        author_id: topic.author.id,
-        author: topic.author.username
-      };
+      let topicShowObj = serializeTopic(topic, true);
 
       //* Comment render
       let commentsObj = [];
-      let user_id = req.session.user ? req.session.user._id : null;
+      let user_id = req.user ? req.user._id : null;
 
       topic.comments.forEach(c => {
         commentsObj.push({
@@ -133,7 +129,7 @@ module.exports = {
       });
 
       res.render('./topic/show.html', {
-        currentUser: req.session.user,
+        currentUser: req.user,
         topic: topicShowObj,
         comments: commentsObj
       });

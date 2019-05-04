@@ -4,10 +4,7 @@ var TopicController = require('../controller/topic');
 module.exports = {
   addCommentByTopicId: async function(req, res) {
     try {
-      let currentUser = req.session.user;
-      if (!currentUser) {
-        return res.render('login.html');
-      }
+      let currentUser = req.user;
 
       let comment = req.body;
       let topic_id = req.params.topic_id;
@@ -30,13 +27,7 @@ module.exports = {
   },
   upCountByCommentId: async function(req, res) {
     try {
-      let currentUser = req.session.user;
-      if (!currentUser) {
-        return res.status(403).json({
-          err_code: 403,
-          message: 'Please log in.'
-        });
-      }
+      let currentUser = req.user;
 
       let comment = await CommentModel.findById(req.params.comment_id);
       let action = 'up';
@@ -66,6 +57,7 @@ module.exports = {
         message: 'Ok.'
       });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({
         err_code: 500,
         message: 'Internet Error.'

@@ -6,101 +6,138 @@
 
 {{block 'body'}}
 <section class="container pt-3">
-  <div class="panel">
-    <div class="header">
-      <a href="/">Return to homepage</a>
-      <span class="divider">/</span>
-    </div>
-    <div class="inner userinfo">
-      <div class="float-left mr-2">
-        <img class="user-avatar" src="{{ user.avatar }}" />
-      </div>
-      <span class="dark">{{ user.username }}</span>
-      <div class="user-profile">
-        <span class="dark">{{ user.bio }}</span>
-      </div>
-      <span class="col-fade">Registrated {{ user.createdTime }}</span>
-    </div>
-  </div>
-  <div class="panel">
-    <div class="header">
-      <span>Recently created</span>
-    </div>
-    <div class="inner">
-      <div id="topic_list">
-        {{ each creTopics }}
-        <div class="cell">
-          <a class="user-avatar float-left" href="/users/{{ $value.authorId }}">
-            <img src="{{ $value.authorAvatar }}" />
+  <div id="sidebar" class="float-right">
+    {{ if currentUser }}
+    <div class="panel">
+      <div class="header">Current User</div>
+      <div class="inner userinfo">
+        <div class="float-left mr-2">
+          <a href="/users/{{ currentUser.id }}" }>
+            <img class="user-avatar" src="{{ currentUser.avatar }}" />
           </a>
-          <span class="reply_count float-left">
-            <span class="count_of_replies">
-              {{ $value.commentCount }}
-            </span>
-            <span class="count_seperator">/</span>
-            <span class="count_of_visits">
-              {{ $value.viewCount }}
-            </span>
-          </span>
-          <a class="last_time float-right" href="/topics/{{ $value.id }}">
-            {{ if $value.lastAuthorAvatar }}
-            <img
-              class="user_small_avatar"
-              src="{{ $value.lastAuthorAvatar }}"
-              alt=".."
-            />
-            {{ /if }}
-            <span class="last_active_time">{{ $value.lastCommentTime }}</span>
-          </a>
-          <div class="topic_wrapper">
-            <span class="top_sec">{{ $value.sectionDescription }}</span>
-            <a class="topic_title" href="/topics/{{ $value.id }}">{{
-              $value.title
-            }}</a>
-          </div>
         </div>
-        {{ /each }}
+        <a href="/users/{{ currentUser.id }}" }>
+          <span class="dark">{{ currentUser.username }}</span>
+        </a>
+        <div class="user-profile">
+          <span class="dark">{{ currentUser.bio }}</span>
+        </div>
       </div>
     </div>
+    {{ /if }}
   </div>
-  <div class="panel">
-    <div class="header">
-      <span>Recently participated</span>
-    </div>
-    <div class="inner">
-      <div id="topic_list">
-        {{ each parTopics }}
-        <div class="cell">
-          <a class="user-avatar float-left" href="/users/{{ $value.authorId }}">
-            <img src="{{ $value.authorAvatar }}" />
-          </a>
-          <span class="reply_count float-left">
-            <span class="count_of_replies">
-              {{ $value.commentCount }}
-            </span>
-            <span class="count_seperator">/</span>
-            <span class="count_of_visits">
-              {{ $value.viewCount }}
-            </span>
-          </span>
-          <a class="last_time float-right" href="/topics/{{ $value.id }}">
-            {{ if $value.lastAuthorAvatar }}
-            <img
-              class="user_small_avatar"
-              src="{{ $value.lastAuthorAvatar }}"
-              alt=".."
-            />
-            {{ /if }}
-            <span class="last_active_time">{{ $value.lastCommentTime }}</span>
-          </a>
-          <div class="topic_wrapper">
-            <span class="top_sec">{{ $value.sectionDescription }}</span>
-            <a class="topic_title" href="/topics/{{ $value.id }}">{{
-              $value.title
-            }}</a>
-          </div>
+
+  <div id="content">
+    <div class="panel">
+      <div class="header">
+        <a href="/">Return to homepage</a>
+        <span class="divider">/</span>
+      </div>
+      <div class="inner userinfo">
+        <div class="float-left mr-2">
+          <img class="user-avatar" src="{{ user.avatar }}" />
         </div>
-        {{ /each }}
+        <span class="dark">{{ user.username }}</span>
+        <div class="user-profile">
+          <span class="dark">{{ user.bio }}</span>
+        </div>
+        <span class="col-fade">Registrated {{ user.createdTime }}</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="header">
+        <span>Recently created</span>
+      </div>
+      <div class="inner no-padding">
+        {{ if creTopics }}
+        <div id="topic_list">
+          {{ each creTopics }}
+          <div class="cell">
+            <a
+              class="user-avatar float-left"
+              href="/users/{{ $value.authorId }}"
+            >
+              <img src="{{ $value.authorAvatar }}" />
+            </a>
+            <span class="reply_count float-left">
+              <span class="count_of_replies">
+                {{ $value.commentCount }}
+              </span>
+              <span class="count_seperator">/</span>
+              <span class="count_of_visits">
+                {{ $value.viewCount }}
+              </span>
+            </span>
+            <a class="last_time float-right" href="/topics/{{ $value.id }}">
+              {{ if $value.lastAuthorAvatar }}
+              <img
+                class="user_small_avatar"
+                src="{{ $value.lastAuthorAvatar }}"
+                alt=".."
+              />
+              {{ /if }}
+              <span class="last_active_time">{{ $value.lastCommentTime }}</span>
+            </a>
+            <div class="topic_wrapper">
+              <span class="top_sec">{{ $value.sectionAbbre }}</span>
+              <a class="topic_title" href="/topics/{{ $value.id }}">{{
+                $value.title
+              }}</a>
+            </div>
+          </div>
+          {{ /each }}
+        </div>
+        {{ else }}
+        <p>No topics</p>
+        {{ /if }}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="header">
+        <span>Recently participated</span>
+      </div>
+      <div class="inner no-padding">
+        {{ if parTopics }}
+        <div id="topic_list">
+          {{ each parTopics }}
+          <div class="cell">
+            <a
+              class="user-avatar float-left"
+              href="/users/{{ $value.authorId }}"
+            >
+              <img src="{{ $value.authorAvatar }}" />
+            </a>
+            <span class="reply_count float-left">
+              <span class="count_of_replies">
+                {{ $value.commentCount }}
+              </span>
+              <span class="count_seperator">/</span>
+              <span class="count_of_visits">
+                {{ $value.viewCount }}
+              </span>
+            </span>
+            <a class="last_time float-right" href="/topics/{{ $value.id }}">
+              {{ if $value.lastAuthorAvatar }}
+              <img
+                class="user_small_avatar"
+                src="{{ $value.lastAuthorAvatar }}"
+                alt=".."
+              />
+              {{ /if }}
+              <span class="last_active_time">{{ $value.lastCommentTime }}</span>
+            </a>
+            <div class="topic_wrapper">
+              <span class="top_sec">{{ $value.sectionAbbre }}</span>
+              <a class="topic_title" href="/topics/{{ $value.id }}">{{
+                $value.title
+              }}</a>
+            </div>
+          </div>
+          {{ /each }}
+        </div>
+        {{ else }}
+        <p>No topics</p>
+        {{ /if }}
       </div>
     </div>
   </div>

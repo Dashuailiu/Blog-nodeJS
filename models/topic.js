@@ -1,9 +1,5 @@
 var mongoose = require('mongoose');
-var User = require('./user');
-var Comment = require('./comment');
 
-var UserSchema = User.schema;
-var CommentSchema = Comment.schema;
 mongoose.connect('mongodb://localhost/mutohut');
 
 var Schema = mongoose.Schema;

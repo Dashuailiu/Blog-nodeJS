@@ -6,16 +6,16 @@ var topicController = require('../controller/topic');
 var router = express.Router();
 
 router
-  .get('/', topicController.getAllTopics)
   .get('/login', function(req, res) {
     res.render('login.html');
   })
-  .post('/login', userController.login)
+  .post('/login', userController.loginAu)
+  // .post('/login', userController.login)
   .get('/register', function(req, res) {
     res.render('register.html');
   })
   .post('/register', userController.register)
-  .get('/logout', userController.logout)
+  .get('/logout', userController.isLoggedIn, userController.logout)
   .get('/users/:user_id', userController.renderPersonalPage);
 
 //#region
