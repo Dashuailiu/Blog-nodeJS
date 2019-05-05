@@ -28,13 +28,39 @@
   <div id="content">
     <div class="panel">
       <div class="header">
-        <a href="/?section=all" class="topic-tab current-tab">All</a>
-        <a href="/?section=good" class="topic-tab ">Sharing</a>
-        <a href="/?section=share" class="topic-tab ">Questions and answers</a>
-        <a href="/?section=ask" class="topic-tab ">Recruitment</a>
-        <a href="/?section=job" class="topic-tab ">Client testing</a>
+        <span
+          id="section0"
+          class="topic-tab"
+          onclick="clickSection(this, event)"
+          >All</span
+        >
+        <span
+          id="section1"
+          class="topic-tab"
+          onclick="clickSection(this, event)"
+          >Sharing</span
+        >
+        <span
+          id="section2"
+          class="topic-tab"
+          onclick="clickSection(this, event)"
+          >Questions and answers</span
+        >
+        <span
+          id="section3"
+          class="topic-tab"
+          onclick="clickSection(this, event)"
+          >Recruitment</span
+        >
+        <span
+          id="section4"
+          class="topic-tab"
+          onclick="clickSection(this, event)"
+          >Client testing</span
+        >
       </div>
       <div class="inner no-padding">
+        {{ if topics }}
         <div id="topic_list">
           {{ each topics }}
           <div class="cell">
@@ -72,6 +98,9 @@
           </div>
           {{ /each }}
         </div>
+        {{ else }}
+        <p class="pl-10px">No topics</p>
+        {{ /if }}
       </div>
       <nav id="page" aria-label="Page navigation example">
         <ul class="pagination">
@@ -93,4 +122,26 @@
     </div>
   </div>
 </section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  var urlParams = new URLSearchParams(window.location.search);
+  var section = urlParams.get('section');
+  if (section) {
+    $('#section' + section).addClass('current-tab');
+  } else {
+    $('#section0').addClass('current-tab');
+  }
+
+  function clickSection(sel, e) {
+    e.preventDefault();
+    var urlParams = new URLSearchParams(
+      window.location.search.replace('?', '')
+    );
+    var sectionQuery = $(sel).attr('id');
+
+    urlParams.set('section', sectionQuery[sectionQuery.length - 1]);
+    window.location.href = '/?' + urlParams.toString();
+  }
+</script>
 {{/block}}

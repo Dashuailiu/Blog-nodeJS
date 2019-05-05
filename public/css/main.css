@@ -273,16 +273,15 @@ span.oi.oi-thumb-up.up-btn.uped {
   padding: 10px;
   background-color: #f6f6f6;
   border-radius: 3px 3px 0 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .panel .inner.userinfo {
   padding: 10px;
-  border-top: 1px solid #e5e5e5;
 }
 
 .inner.userinfo {
   padding: 10px;
-  border-top: 1px solid #e5e5e5;
   background-color: #fff;
   line-height: 2em;
 }
@@ -330,9 +329,32 @@ span.oi.oi-thumb-up.up-btn.uped {
 }
 
 .topic-tab:hover {
+  color: #0056b3;
+  cursor: pointer;
   text-decoration: none;
+}
+
+.topic-tab.current-tab:hover {
+  color: #fff;
+  cursor: default;
 }
 
 #topic_list .cell:hover {
   background: #f5f5f5;
+}
+
+.form-group > label,
+legend {
+  position: static;
+  font-weight: 700;
+}
+
+.pl-10px {
+  padding-left: 10px !important;
+}
+
+.bd-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1071;
 }

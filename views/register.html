@@ -73,18 +73,21 @@
             var err_code = data.err_code;
             if (err_code === 0) {
               var prevLink = document.referrer;
-              if ($.trim(prevLink) == '') {
+              if ($.trim(prevLink) === '') {
                 window.location.href = '/';
               } else {
-                if (prevLink.indexOf('127.0.0.1') == -1) {
+                if (prevLink.indexOf('127.0.0.1') === -1) {
                   // not from other websites
                   window.location.href = '/';
-                }
-                if (prevLink.indexOf('register') != -1) {
-                  // not from login page
+                } else if (prevLink.indexOf('login') !== -1) {
+                  // from login page
                   window.location.href = '/';
+                } else if (prevLink.indexOf('register') !== -1) {
+                  // from register page
+                  window.location.href = '/';
+                } else {
+                  window.location.href = prevLink;
                 }
-                window.location.href = prevLink;
               }
             } else {
               window.alert(data.message);

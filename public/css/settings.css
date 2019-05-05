@@ -10,3 +10,35 @@
 .panel {
   margin-bottom: 13px !important;
 }
+
+.setting-avatar {
+  height: 200px !important;
+  width: 200px !important;
+  border-radius: 3px !important;
+}
+
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+.check-legend {
+  margin-top: 0.4rem !important;
+  margin-left: -1.1rem !important;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  font-size: 200px !important;
+  direction: ltr;
+  cursor: pointer;
+}

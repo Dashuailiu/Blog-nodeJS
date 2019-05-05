@@ -68,7 +68,19 @@ module.exports = {
   getAllTopics: async function(req, res) {
     //* retrieve all instances by query, like 'search'
     try {
-      let topics = await TopicModel.find()
+      let query = {};
+      if ([1, 2, 3, 4].indexOf(parseInt(req.query.section)) !== -1) {
+        query.section = parseInt(req.query.section);
+      }
+
+      if (req.query.search) {
+        query.$or = [
+          { content: { $regex: req.query.search, $options: 'i' } },
+          { title: { $regex: req.query.search, $options: 'i' } }
+        ];
+      }
+
+      let topics = await TopicModel.find(query)
         .populate('author')
         .populate('comments')
         .populate({
@@ -82,7 +94,7 @@ module.exports = {
 
       res.render('index.html', {
         currentUser: req.user,
-        topics: topicsObj
+        topics: topicsObj.length ? topicsObj : null
       });
     } catch (err) {
       console.log(err);

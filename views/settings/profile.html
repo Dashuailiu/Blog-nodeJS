@@ -2,6 +2,14 @@
 
 {{block 'title'}}{{ 'Muto Hut - blog' }}{{/block}}
 
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/settings.css" />
+<link
+  rel="stylesheet"
+  href="/public/lib/open-iconic-master/font/css/open-iconic-bootstrap.css"
+/>
+{{/block}}
+
 {{block 'body'}}
 <section class="container pt-3">
   <div id="sidebar" class="float-right">
@@ -11,7 +19,11 @@
       <div class="inner userinfo">
         <div class="float-left mr-2">
           <a href="/users/{{ currentUser._id }}" }>
-            <img class="user-avatar" src="{{ currentUser.avatar }}" />
+            <img
+              id="avatarDisplay1"
+              class="user-avatar"
+              src="{{ currentUser.avatar }}"
+            />
           </a>
         </div>
         <a href="/users/{{ currentUser.id }}" }>
@@ -32,114 +44,135 @@
         <span class="divider">/ Profile setting</span>
       </div>
       <div class="inner userinfo">
-        <form>
-          <div class="form-group">
-            <label for="usernameInputEmail">Email</label>
-            <p class="form-control-static">{{ currentUser.email }}</p>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleInputPassword1">Username</label>
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              placeholder=""
-              value="{{ currentUser.username }}"
-            />
-          </div>
-
-          <fieldset class="form-group">
-            <div class="row">
-              <legend class="col-form-label col-sm-3 pt-0">
-                Gender
-              </legend>
-              <div class="col-sm-9">
-                <div class="form-check">
-                  <input
-                    type="hidden"
-                    id="userGender"
-                    value="{{ currentUser.gender || secret }}"
-                  />
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gridRadios1"
-                    value="male"
-                  />
-                  <label class="form-check-label" for="gridRadios1">
-                    Male
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gridRadios2"
-                    value="female"
-                  />
-                  <label class="form-check-label" for="gridRadios2">
-                    Female
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gridRadios3"
-                    value="secret"
-                  />
-                  <label class="form-check-label" for="gridRadios3">
-                    Secret
-                  </label>
-                </div>
+        <div class="row">
+          <div class="col-md-8">
+            <form id="profile_form">
+              <div class="form-group ml-5">
+                <label for="emailInput">Email</label>
+                <input
+                  type="text"
+                  readonly
+                  class="form-control col-sm-10"
+                  id="emailInput"
+                  value="{{ currentUser.email }}"
+                />
               </div>
-            </div>
-          </fieldset>
 
-          <div class="form-group">
-            <label for="exampleInputPassword1">Introduction</label>
-            <textarea class="form-control" id="bioInput" name="bio" rows="3">{{
-              currentUser.bio
-            }}</textarea>
+              <div class="form-group ml-5">
+                <label for="usernameInput">Username</label>
+                <input
+                  type="text"
+                  class="form-control col-sm-10"
+                  name="username"
+                  id="usernameInput"
+                  value="{{ currentUser.username }}"
+                />
+              </div>
+
+              <fieldset class="form-group ml-5">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">
+                    Gender
+                  </legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input
+                        type="hidden"
+                        id="userGender"
+                        value="{{ currentUser.gender || secret }}"
+                      />
+                      <input
+                        class="form-check-input check-legend"
+                        type="radio"
+                        name="gender"
+                        id="gridRadios1"
+                        value="male"
+                      />
+                      <label class="form-check-label" for="gridRadios1">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input check-legend"
+                        type="radio"
+                        name="gender"
+                        id="gridRadios2"
+                        value="female"
+                      />
+                      <label class="form-check-label" for="gridRadios2">
+                        Female
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input check-legend"
+                        type="radio"
+                        name="gender"
+                        id="gridRadios3"
+                        value="secret"
+                      />
+                      <label class="form-check-label" for="gridRadios3">
+                        Secret
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="form-group ml-5">
+                <label for="bioInput">Bio</label>
+                <textarea
+                  class="form-control col-sm-10"
+                  id="bioInput"
+                  name="bio"
+                  rows="3"
+                  >{{ currentUser.bio }}</textarea
+                >
+              </div>
+
+              <div class="form-group ml-5">
+                <label for="locationInput">Location</label>
+                <input
+                  type="text"
+                  class="form-control col-sm-10"
+                  name="location"
+                  id="locationInput"
+                  value="{{ currentUser.location }}"
+                />
+              </div>
+
+              <button type="submit" class="ml-5 btn btn-success">
+                Update Profile
+              </button>
+            </form>
           </div>
-
-          <div class="form-group">
-            <label for="ageInput">Age</label>
-            <input
-              type="number"
-              class="form-control"
-              name="age"
-              id="ageInput"
-              placeholder="Enter age"
-              value="{{ currentUser.age }}"
-            />
-          </div>
-
-          <button type="submit" class="btn btn-primary">Save Profile</button>
-        </form>
-
-        <div class="col-md-2 profile-avatar">
-          <dl>
-            <dt>Photo setting</dt>
-            <dd>
+          <div class="col-md-4">
+            <label class="font-weight-bold mb-2">Profile picture</label>
+            <div class="position-relative">
               <img
-                class="avatar"
-                width="150"
-                height="150"
+                id="avatarDisplay2"
+                class="setting-avatar"
                 src="{{ currentUser.avatar }}"
                 alt=""
               />
-              <div>
-                <button class="btn btn-default" href="">
-                  Upload new picture
-                </button>
+              <div class="position-absolute bottom-0 rounded-lg py-1 px-1">
+                <span id="btnEdit" class="btn btn-dark btn-sm fileinput-button">
+                  <span class="oi oi-pencil"></span>
+                  <span>Edit</span>
+                  <!--  SINGLE FILE -->
+                  <form id="avatar_form">
+                    <input
+                      type="file"
+                      name="avatar"
+                      accept="image/*"
+                      onchange="avatarUpload(this.form, event)"
+                    />
+                  </form>
+                </span>
               </div>
-            </dd>
-          </dl>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -147,15 +180,70 @@
 </section>
 
 <script src="/node_modules/jquery/dist/jquery.js"></script>
+
 <script>
   let userGender = document.getElementById('userGender').value;
-  if (userGender === 'secret') {
-    document.getElementById('gridRadios3').checked = true;
+  if (userGender === 'male') {
+    document.getElementById('gridRadios1').checked = true;
   } else if (userGender === 'female') {
     document.getElementById('gridRadios2').checked = true;
+  } else {
+    document.getElementById('gridRadios3').checked = true;
   }
-  {
-    document.getElementById('gridRadios1').checked = true;
+  //Action: update profile
+  $('#profile_form').on('submit', function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+
+    console.log('asdasd');
+
+    $.ajax({
+      url: '/settings/profile',
+      type: 'post',
+      data: formData,
+      dataType: 'json',
+      success: function(data) {
+        var err_code = data.err_code;
+        if (err_code === 0) {
+          window.location.href = '/settings/profile';
+        } else {
+          window.alert(data.message);
+        }
+      }
+    });
+  });
+
+  function avatarUpload(formData, e) {
+    e.preventDefault();
+    var formData = new FormData(formData);
+
+    console.log('asdasd');
+    // disabled the submit button
+    $('#btnEdit').prop('disabled', true);
+
+    $.ajax({
+      type: 'post',
+      enctype: 'multipart/form-data',
+      url: '/profile/avatar',
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function(data) {
+        var err_code = data.err_code;
+        if (err_code === 0) {
+          $('#btnEdit').prop('disabled', false);
+          console.log(data);
+          $('#avatarDisplay1').attr('src', data.filePath);
+          $('#avatarDisplay2').attr('src', data.filePath);
+        } else {
+          window.alert(data.message);
+        }
+      },
+      error: function(data) {
+        window.alert('Internet Error');
+      }
+    });
   }
 </script>
 {{/block}}

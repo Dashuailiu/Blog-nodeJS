@@ -142,5 +142,52 @@ module.exports = {
       parTopics: parTopicsObj.length ? parTopicsObj : null,
       currentUser: req.user
     });
+  },
+  renderProfilePage: function(req, res) {
+    res.render('./settings/profile.html', {
+      currentUser: req.user
+    });
+  },
+  updateProfile: async function(req, res) {
+    try {
+      let userUpdateInfo = req.body;
+      let updateObj = {
+        username: userUpdateInfo.username,
+        gender: userUpdateInfo.gender,
+        bio: userUpdateInfo.bio,
+        location: userUpdateInfo.location
+      };
+      console.log(updateObj);
+      await UserModel.findByIdAndUpdate(req.user.id, updateObj);
+
+      return res.status(200).json({
+        err_code: 0,
+        message: 'Ok.'
+      });
+    } catch (err) {
+      return res.status(500).json({
+        err_code: 500,
+        message: 'Internet Error.'
+      });
+    }
+  },
+  uploadAvatar: async function(req, res) {
+    try {
+      let filePath = '/'.concat(req.file.path);
+      await UserModel.findByIdAndUpdate(req.user.id, {
+        avatar: filePath
+      });
+      console.log(req.file);
+      return res.status(200).json({
+        err_code: 0,
+        message: 'Upload successfully.',
+        filePath: filePath
+      });
+    } catch (err) {
+      return res.status(500).json({
+        err_code: 500,
+        message: 'Internet Error.'
+      });
+    }
   }
 };
