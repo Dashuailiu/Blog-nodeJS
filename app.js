@@ -96,6 +96,15 @@ app.use(routeUser);
 app.use(routeTopic);
 app.use(routeComment);
 
+app.use(function(req, res, next) {
+  return res.render('./settings/404.html');
+});
+
+// 500 - Any server error
+app.use(function(err, req, res, next) {
+  return res.status(500).send({ error: err });
+});
+
 app.listen(portNo, function() {
   console.log(`Running on port ${portNo}....`);
 });

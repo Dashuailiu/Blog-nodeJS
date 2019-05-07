@@ -101,7 +101,7 @@ async function register(req, res, next) {
 async function renderPersonalPage(req, res) {
   let user = await UserModel.findById(req.params.user_id);
   if (!user) {
-    res.render('404.html');
+    res.render('./settings/404.html');
   }
 
   let userObj = {
