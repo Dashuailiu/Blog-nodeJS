@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mutohut');
+mongoose.connect('mongodb://localhost/mutohut', { useNewUrlParser: true });
 
 var Schema = mongoose.Schema;
 

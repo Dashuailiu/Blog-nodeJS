@@ -3,21 +3,26 @@
 //* UpCount a comment
 var express = require('express');
 
-var userController = require('../controller/user');
-var commentController = require('../controller/comment');
+var UserController = require('../controller/user');
+var CommentController = require('../controller/comment');
 
 var router = express.Router();
 
 router
   .post(
     '/:topic_id/comment',
-    userController.isLoggedIn,
-    commentController.addCommentByTopicId
+    UserController.isLoggedIn,
+    CommentController.addCommentByTopicId
   )
   .post(
     '/topic/:topic_id/comment/:comment_id/upcount',
-    userController.isLoggedInAjax,
-    commentController.upCountByCommentId
+    UserController.isLoggedInAjax,
+    CommentController.upCountByCommentId
+  )
+  .post(
+    '/comment/:comment_id/reply',
+    UserController.isLoggedIn,
+    CommentController.replyComment
   );
 
 module.exports = router;

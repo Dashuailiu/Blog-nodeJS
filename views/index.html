@@ -1,7 +1,9 @@
 {{extend './_layouts/home.html'}}
 
 {{block 'title'}}{{ 'Muto Hut - Blog' }}{{/block}}
-
+{{block 'head'}}
+<!-- <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script> -->
+{{/block}}
 {{block 'body'}}
 <section class="container pt-3">
   <div id="sidebar" class="float-right">
@@ -23,6 +25,12 @@
       </div>
     </div>
     {{ /if }}
+    <div id="topicsWithoutComments" class="panel">
+      <div class="header">Topics - no comments</div>
+      <div class="inner no-padding">
+        <p class="pl-10px">No topics</p>
+      </div>
+    </div>
   </div>
 
   <div id="content">
@@ -61,7 +69,11 @@
       </div>
       <div class="inner no-padding">
         {{ if topics }}
-        <div id="topic_list">
+        <div
+          id="topic_list"
+          total-page="{{ page.total }}"
+          current-page="{{ page.current }}"
+        >
           {{ each topics }}
           <div class="cell">
             <a
@@ -98,50 +110,90 @@
           </div>
           {{ /each }}
         </div>
+        <div id="page-selection"></div>
         {{ else }}
         <p class="pl-10px">No topics</p>
         {{ /if }}
       </div>
-      <nav id="page" aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </section>
 
 <script src="/node_modules/jquery/dist/jquery.js"></script>
+<script
+  type="text/javascript"
+  src="/node_modules/bootpag/lib/jquery.bootpag.js"
+></script>
 <script>
-  var urlParams = new URLSearchParams(window.location.search);
-  var section = urlParams.get('section');
+  let urlQueryParams = new URLSearchParams(
+    window.location.search.replace('?', '')
+  );
+  var section = urlQueryParams.get('section');
+
   if (section) {
     $('#section' + section).addClass('current-tab');
   } else {
     $('#section0').addClass('current-tab');
   }
 
+  function urlRemovePage() {
+    if (urlQueryParams.has('page')) {
+      urlQueryParams.delete('page');
+    }
+  }
+
+  if (document.getElementById('topic_list')) {
+    const totalPage =
+      Number(
+        document.getElementById('topic_list').getAttribute('total-page')
+      ) || 0;
+    const currentPage =
+      Number(
+        document.getElementById('topic_list').getAttribute('current-page')
+      ) || 0;
+    // init bootpag
+    $('#page-selection')
+      .bootpag({
+        total: totalPage,
+        page: currentPage
+      })
+      .on('page', function(event, num) {
+        e.preventDefault();
+        urlQueryParams.set('page', num);
+        window.location.href = '/?' + urlQueryParams.toString();
+      });
+  }
+
+  $.ajax({
+    url: '/topics/nocomments',
+    type: 'get',
+    dataType: 'json',
+    success: function(data) {
+      var code = data.code;
+      var htmlString = '<ul class="unstyled">';
+      if (code === 0) {
+        $.each(data.topics, function(i, t) {
+          htmlString +=
+            '<li key="i"><div><a class="dark topic_title" href="/topics/' +
+            t.id +
+            '">' +
+            t.title +
+            '</a></div></li>';
+        });
+        htmlString += '</ul>';
+        $('#topicsWithoutComments>.inner>.pl-10px').replaceWith(htmlString);
+      } else if (code === 1) {
+        // do nothing
+      }
+    }
+  });
+
   function clickSection(sel, e) {
     e.preventDefault();
-    var urlParams = new URLSearchParams(
-      window.location.search.replace('?', '')
-    );
     var sectionQuery = $(sel).attr('id');
-
-    urlParams.set('section', sectionQuery[sectionQuery.length - 1]);
-    window.location.href = '/?' + urlParams.toString();
+    urlRemovePage();
+    urlQueryParams.set('section', sectionQuery[sectionQuery.length - 1]);
+    window.location.href = '/?' + urlQueryParams.toString();
   }
 </script>
 {{/block}}

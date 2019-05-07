@@ -3,52 +3,51 @@
 {{block 'title'}}{{ 'Muto Hut' }}{{/block}}
 
 {{block 'body'}}
-<section class="container">
-  <div class="row">
-    <div class="col-md-5">
-      <form id="post_topic_form">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Choose section</label>
-          <select class="form-control" name="section">
-            <option value="1">Sharing</option>
-            <option value="2">Questions and answers</option>
-            <option value="3">Recruitment</option>
-            <option value="4">Client testing</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputTitle">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputTitle"
-            name="title"
-            minlength="1"
-            placeholder="Title"
-          />
-        </div>
-        <div class="form-group">
-          <label for="exampleInputContent">Content</label>
-          <textarea
-            class="form-control"
-            id="exampleInputContent"
-            name="content"
-            rows="3"
-            minlength="5"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-      </form>
+<section class="container pt-3">
+  <form id="post_topic_form">
+    <div class="form-group col-md-5">
+      <label for="exampleInputEmail1">Choose section</label>
+      <select class="form-control" name="section">
+        <option value="1">Sharing</option>
+        <option value="2">Questions and answers</option>
+        <option value="3">Recruitment</option>
+        <option value="4">Client testing</option>
+      </select>
     </div>
-  </div>
+    <div class="form-group col-md-5">
+      <label for="exampleInputTitle">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputTitle"
+        name="title"
+        minlength="1"
+        placeholder="Title"
+      />
+    </div>
+    <div class="form-group no-margin-bottom col-md-10">
+      <label for="contentInput">Content</label>
+      <textarea
+        class="form-control hidden"
+        id="contentInput"
+        name="content"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-success ml-3">Submit</button>
+  </form>
 </section>
 
 <script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="/node_modules/simplemde/dist/simplemde.min.js"></script>
+<link rel="stylesheet" href="/node_modules/simplemde/dist/simplemde.min.css" />
 <script>
+  var mde = new SimpleMDE({
+    element: document.getElementById('contentInput')
+  });
   $('#post_topic_form').on('submit', function(e) {
     e.preventDefault();
     var formData = $(this).serialize();
-    console.log(formData);
+    formData.content = mde.value();
     $.ajax({
       url: '/topics/new',
       type: 'post',

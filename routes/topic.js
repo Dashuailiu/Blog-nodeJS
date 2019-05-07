@@ -13,6 +13,7 @@ router
     });
   })
   .post('/topics/new', userController.isLoggedIn, topicController.postTopic)
+  .get('/topics/nocomments', topicController.getTopicsWithoutComments)
   .get('/topics/:topic_id', topicController.getTopicById);
 
 module.exports = router;

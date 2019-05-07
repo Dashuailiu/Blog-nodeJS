@@ -25,6 +25,12 @@
       </div>
     </div>
     {{ /if }}
+    <div id="topicsWithoutComments" class="panel">
+      <div class="header">Topics - no comments</div>
+      <div class="inner no-padding">
+        <p class="pl-10px">No topics</p>
+      </div>
+    </div>
   </div>
 
   <div id="content">
@@ -142,4 +148,32 @@
     </div>
   </div>
 </section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $.ajax({
+    url: '/topics/nocomments',
+    type: 'get',
+    dataType: 'json',
+    success: function(data) {
+      var code = data.code;
+      var htmlString = '<ul class="unstyled">';
+      if (code === 0) {
+        $.each(data.topics, function(i, t) {
+          htmlString +=
+            '<li key="i"><div><a class="dark topic_title" href="/topics/' +
+            t.id +
+            '">' +
+            t.title +
+            '</a></div></li>';
+        });
+        htmlString += '</ul>';
+
+        $('#topicsWithoutComments>.inner>.pl-10px').replaceWith(htmlString);
+      } else if (code === 1) {
+        // do nothing
+      }
+    }
+  });
+</script>
 {{/block}}

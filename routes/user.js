@@ -1,7 +1,6 @@
 //* Registration, login, logout
 var express = require('express');
 var userController = require('../controller/user');
-var topicController = require('../controller/topic');
 
 var router = express.Router();
 
@@ -17,50 +16,5 @@ router
   .post('/register', userController.register)
   .get('/logout', userController.isLoggedIn, userController.logout)
   .get('/users/:user_id', userController.renderPersonalPage);
-
-//#region
-// .post('/register', function(req, res) {
-//   var user = req.body;
-//   user.password = md5(md5(user.password));
-//   //TODO register action
-//   User.findOne(
-//     {
-//       $or: [{ email: user.email }, { username: user.username }]
-//     },
-//     function(err, data) {
-//       if (err) {
-//         return res.status(500).json({
-//           err_code: 500,
-//           msg: 'Server Error.'
-//         });
-//       }
-//       if (data) {
-//         //* email or username is already taken
-//         return res.status(200).json({
-//           err_code: 1,
-//           msg: 'Email or username is already taken'
-//         });
-//         // .send(
-//         //   JSON.stringify({ msg: 'email or username is already taken' })
-//         // );
-//       }
-
-//       //* save data in database
-//       new User(user).save(function(err, user) {
-//         if (err) {
-//           return res.status(500).json({
-//             err_code: 500,
-//             msg: 'Server Error.'
-//           });
-//         }
-//       });
-//       return res.status(200).json({
-//         err_code: 0,
-//         message: 'ok'
-//       });
-//     }
-//   );
-// });
-//#endregion
 
 module.exports = router;

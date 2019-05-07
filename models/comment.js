@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mutohut');
+mongoose.connect('mongodb://localhost/mutohut', { useNewUrlParser: true });
 
 var Schema = mongoose.Schema;
 
@@ -12,6 +12,10 @@ var commentSchema = new Schema(
       type: Number,
       enum: [0, 1],
       default: 0
+    },
+    replyToComment: {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
     },
     content: {
       type: String,
@@ -50,12 +54,5 @@ var commentSchema = new Schema(
     timestamps: { createdAt: 'createdTime', updatedAt: 'lastModifiedTime' }
   }
 );
-
-//* case: comment --> comment
-commentSchema.set('ReplyToComment', {
-  type: Schema.Types.ObjectId,
-  ref: 'Comment',
-  default: null
-});
 
 module.exports = mongoose.model('Comment', commentSchema);

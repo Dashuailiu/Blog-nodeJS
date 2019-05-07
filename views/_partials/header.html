@@ -1,74 +1,54 @@
 <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light pr-5 pl-5"> -->
-<nav class="navbar navbar-dark bg-dark navbar-expand-lg pr-5 pl-5">
+<nav
+  class="navbar navbar-dark bg-dark navbar-expand-lg navbar-fixed-top pr-5 pl-5"
+>
   <a class="navbar-brand" href="/">Muto Hut</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <div class="mr-auto ml-3">
-      <input
-        id="search_input"
-        class="form-control mr-sm-2 topic_hidden"
-        type="search"
-        placeholder="Search"
-        onkeypress="enterEvent(event)"
-      />
+  <div class="mr-auto ml-3">
+    <input
+      id="search_input"
+      class="form-control mr-sm-2 topic_hidden"
+      type="search"
+      placeholder="Search"
+      onkeypress="enterEvent(event)"
+    />
+  </div>
+  <div id="navbar-action" class="ml-auto">
+    {{ if currentUser }}
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/topics/new">Post</a>
+    {{ else }}
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Login</a>
+
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
+      >Register</a
+    >
+    {{ /if }}
+    {{ if currentUser }}
+    <a
+      class="dropdown-toggle"
+      href="/users/{{ currentUser.id }}"
+      id="navbarDropdownMenuLink"
+      role="button"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      ><img class="user-avatar-25" src="{{ currentUser.avatar }}" alt="" />
+      <span class="caret"></span>
+    </a>
+    <div
+      class="dropdown-menu dropdown-menu-right"
+      aria-labelledby="navbarDropdownMenuLink"
+    >
+      <span class="dropdown-item-text"
+        >Current user: {{ currentUser.username }}</span
+      >
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="/users/{{ currentUser.id }}"
+        >Personal Homepage</a
+      >
+      <a class="dropdown-item" href="/settings/profile">Settings</a>
+      <a class="dropdown-item" href="/logout">Logout</a>
     </div>
-    <ul class="navbar-nav my-2 my-lg-0">
-      {{ if currentUser }}
-      <li class="nav-item mr-2 topic_hidden">
-        <a class="btn btn-outline-success my-2 my-sm-0" href="/topics/new"
-          >Post</a
-        >
-      </li>
-      {{ else }}
-      <li class="nav-item mr-2">
-        <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Login</a>
-      </li>
-      <li class="nav-item mr-2">
-        <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
-          >Register</a
-        >
-      </li>
-      {{ /if }}
-      {{ if currentUser }}
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="/users/{{ currentUser.id }}"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          ><img class="user-avatar-25" src="{{ currentUser.avatar }}" alt="" />
-          <span class="caret"></span>
-        </a>
-        <div
-          class="dropdown-menu dropdown-menu-right"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <span class="dropdown-item-text"
-            >Current user: {{ currentUser.username }}</span
-          >
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/users/{{ currentUser.id }}"
-            >Personal Homepage</a
-          >
-          <a class="dropdown-item" href="/settings/profile">Settings</a>
-          <a class="dropdown-item" href="/logout">Logout</a>
-        </div>
-      </li>
-      {{ /if }}
-    </ul>
+    {{ /if }}
   </div>
 </nav>
 
@@ -99,6 +79,9 @@
       var urlParams = new URLSearchParams(
         window.location.search.replace('?', '')
       );
+      if (urlParams.has('page')) {
+        urlParams.delete('page');
+      }
       urlParams.set('search', searchText);
       window.location.href = '/?' + urlParams.toString();
     }

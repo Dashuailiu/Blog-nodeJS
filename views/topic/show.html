@@ -17,90 +17,195 @@
 
 {{block 'body'}}
 <section class="container pt-3">
-  <div class="card">
-    <div class="card-body topic_area" id="{{ topic.id }}">
-      <h5 class="card-title">
-        <span class="top_sec">{{ topic.sectionAbbre }}</span> {{ topic.title }}
-      </h5>
-      <div class="card-subtitle mb-2 text-muted">
-        <div class="topic-subtitle">
-          <span> {{ topic.createdTime }}</span>
-          <span>
-            Author
-            <a href="/users/{{ topic.authorId }}">{{
-              topic.authorName
-            }}</a></span
-          >
-          <span> {{ topic.viewCount }} views</span>
-          <span> From {{ topic.section }}</span>
+  <div id="sidebar" class="float-right">
+    <div class="panel">
+      <div class="header">Author Information</div>
+      <div class="inner userinfo">
+        <div class="float-left mr-2">
+          <a href="/users/{{ topic.authorId }}" }>
+            <img class="user-avatar" src="{{ topic.authorAvatar }}" />
+          </a>
         </div>
-      </div>
-      <div class="card-text content-style pt-1">
-        <div class="markdown-body">
-          <p>{{ topic.content }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  {{ if currentUser }}
-  <div id="addComment" class="card mt-3">
-    <div class="block-style-header">
-      <span>Add a new comment</span>
-    </div>
-    <div class="card-body pl-3 pt-2 pb-3">
-      <form action="/{{ topic.id }}/comment" method="post">
-        <div class="form-group mb-2">
-          <textarea
-            class="form-control"
-            name="content"
-            id="formControlComment"
-            rows="4"
-            minlength="1"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Reply</button>
-      </form>
-    </div>
-  </div>
-  {{ /if }}
-  <div id="Comments" class="card mt-3">
-    <div class="block-style-header">
-      <span>{{ topic.commentCount }} Comments</span>
-    </div>
-    {{ each comments }}
-    <div class="cell-content pr-3 comment_area" id="{{ $value.id }}">
-      <div class="user-content">
-        <a
-          href="/users/{{ $value.publisher_id }}"
-          class="user-avatar float-left"
-        >
-          <img src="{{ $value.publisher_avatar }}" />
+        <a href="/users/{{ topic.authorId }}" }>
+          <span class="dark">{{ topic.authorName }}</span>
         </a>
-        <div class="user-info">
-          <a class="reply-author" href="/users/{{ $value.publisher_id }}">{{
-            $value.publisher_name
-          }}</a>
-          <a class="reply-time" href="/topics/{{ topic.id }}#{{ $value.id }}"
-            >• {{ $value.createdTime }}</a
-          >
-        </div>
-        <div class="user-action float-right">
-          <span class="oi oi-thumb-up up-btn {{ $value.uped }}"></span>
-          <span class="up-count">{{ $value.upCount }}</span>
-        </div>
-      </div>
-      <div class="reply-content">
-        <div class="markdown-body">
-          {{ $value.content }}
+        <div class="user-profile">
+          <span class="dark">{{ topic.authorBio }}</span>
         </div>
       </div>
     </div>
-    {{ /each }}
+
+    <div id="topicsWithoutComments" class="panel">
+      <div class="header">Topics - no comments</div>
+      <div class="inner no-padding">
+        <p class="pl-10px">No topics</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="panel">
+      <div class="card topic_area" id="{{ topic.id }}">
+        <div class="topic-header">
+          <h5 class="card-title">
+            <span class="top_sec">{{ topic.sectionAbbre }}</span>
+            {{ topic.title }}
+          </h5>
+          <div class="card-subtitle mb-2 text-muted">
+            <div class="topic-subtitle">
+              <span> {{ topic.createdTime }}</span>
+              <span>
+                Author
+                <a href="/users/{{ topic.authorId }}">{{
+                  topic.authorName
+                }}</a></span
+              >
+              <span> {{ topic.viewCount }} views</span>
+              <span> From {{ topic.section }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body no-padding">
+          <div class="card-text content-style pt-3 pl-4">
+            <div id="mardown-content">{{@(topic.content)}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div id="comments" class="card mt-3">
+        <div class="block-style-header">
+          <span>{{ topic.commentCount }} Comments</span>
+        </div>
+        {{ each comments }}
+        <div class="cell-content pr-3 comment_area" id="{{ $value.id }}">
+          <div class="user-content">
+            <a
+              href="/users/{{ $value.publisher_id }}"
+              class="user-avatar float-left"
+            >
+              <img src="{{ $value.publisher_avatar }}" />
+            </a>
+            <div class="user-info">
+              <a class="reply-author" href="/users/{{ $value.publisher_id }}">{{
+                $value.publisher_name
+              }}</a>
+              <a
+                class="reply-time"
+                href="/topics/{{ topic.id }}#{{ $value.id }}"
+                >• {{ $value.createdTime }}</a
+              >
+            </div>
+            <div class="user-action float-right">
+              {{ if currentUser }}
+              <span class="oi oi-thumb-up up-btn {{ $value.uped }}"></span>
+              <span class="up-count">{{ $value.upCount }}</span>
+              <span class="oi oi-share mirrorRotateLevel reply-btn"></span>
+              {{ else }}
+              <span class="oi oi-thumb-up"></span>
+              <span class="up-count">{{ $value.upCount }}</span>
+              {{ /if }}
+            </div>
+          </div>
+
+          <div class="reply-content">
+            <div id="mardown-content">
+              {{@ $value.content }}
+            </div>
+          </div>
+
+          <div id="comment{{ $value.id }}" class="reply-area hidden">
+            <form action="/comment/{{ $value.id }}/reply" method="post">
+              <input type="hidden" name="topic_id" value="{{ topic.id }}" />
+              <textarea
+                class="form-control hidden"
+                id="replyComment{{ $value.id }}"
+                name="content"
+              ></textarea>
+              <button type="submit" class="btn btn-primary mt-1">Reply</button>
+            </form>
+          </div>
+        </div>
+        {{ /each }}
+      </div>
+    </div>
+
+    {{ if currentUser }}
+    <div class="panel">
+      <div id="addComment" class="card mt-3">
+        <div class="block-style-header">
+          <span>Add a new comment</span>
+        </div>
+        <div class="card-body pl-3 pt-2 pb-3">
+          <form action="/{{ topic.id }}/comment" method="post">
+            <div class="form-group mb-2">
+              <textarea
+                class="form-control hidden"
+                name="content"
+                id="formControlComment"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Reply</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {{ /if }}
   </div>
 </section>
 
 <script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="/node_modules/simplemde/dist/simplemde.min.js"></script>
+<link rel="stylesheet" href="/node_modules/simplemde/dist/simplemde.min.css" />
 <script>
+  if (document.getElementById('formControlComment')) {
+    var mde = new SimpleMDE({
+      element: document.getElementById('formControlComment'),
+      status: false
+    });
+  }
+
+  $.ajax({
+    url: '/topics/nocomments',
+    type: 'get',
+    dataType: 'json',
+    success: function(data) {
+      var code = data.code;
+      var htmlString = '<ul class="unstyled">';
+      if (code === 0) {
+        $.each(data.topics, function(i, t) {
+          htmlString +=
+            '<li key="i"><div><a class="dark topic_title" href="/topics/' +
+            t.id +
+            '">' +
+            t.title +
+            '</a></div></li>';
+        });
+        htmlString += '</ul>';
+        $('#topicsWithoutComments>.inner>.pl-10px').replaceWith(htmlString);
+      } else if (code === 1) {
+        // do nothing
+      }
+    }
+  });
+
+  $('.reply-btn').click(function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    const comment_id = $this.closest('.comment_area').attr('id');
+    const username = $('#' + comment_id + ' .user-info>a.reply-author')
+      .text()
+      .trim();
+    console.log(username);
+    $('#comment' + comment_id).removeClass('hidden');
+    var mde = new SimpleMDE({
+      element: document.getElementById('replyComment' + comment_id),
+      status: false
+    });
+    mde.value('@' + username + ' ');
+  });
+
   $('.up-btn').click(function(e) {
     e.preventDefault();
     var $this = $(this);

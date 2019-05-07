@@ -1,5 +1,6 @@
 body {
   background-color: #e1e1e1 !important;
+  padding-top: 55px;
 }
 
 .dropdown-current-user {
@@ -22,6 +23,20 @@ body {
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   background: none;
+}
+
+.dropdown-toggle {
+  margin-left: 0.75rem !important;
+}
+
+.dropdown-toggle::after {
+  vertical-align: 0px !important;
+  color: #fff;
+  text-decoration: none !important;
+}
+
+a.dropdown-toggle:hover {
+  text-decoration: none !important;
 }
 
 @media (min-width: 768px) {
@@ -95,11 +110,11 @@ body {
   color: #b4b4b4;
 }
 
-#topic_list a.topic_title {
+a.topic_title {
   color: #333;
 }
 
-#topic_list a.topic_title:visited {
+a.topic_title:visited {
   color: #888;
 }
 
@@ -179,6 +194,7 @@ img {
 }
 nav#page > ul.pagination {
   background: #fff !important;
+  border-radius: 0 0 0.25rem 0.25rem !important;
 }
 
 nav#page li .page-link {
@@ -187,6 +203,9 @@ nav#page li .page-link {
 
 div.topic-subtitle span::before {
   content: '•';
+}
+div.topic-subtitle {
+  font-size: 14px;
 }
 
 .content-style {
@@ -241,6 +260,18 @@ div.topic-subtitle span::before {
   color: gray;
 }
 
+.card-body.no-padding {
+  padding: 0 !important;
+}
+
+.card-title {
+  font-size: 1.5rem !important;
+}
+
+.topic-header {
+  padding: 0.75rem 0 0 0.75rem;
+}
+
 .cell-content {
   background: #fff;
   border-top: 1px solid #f0f0f0;
@@ -254,13 +285,14 @@ body .markdown-body {
   padding: 0 !important;
 }
 
+span.oi.oi-thumb-up,
 .up-btn {
-  cursor: pointer;
   opacity: 0.4;
 }
 
 .up-btn:hover {
   color: #000;
+  cursor: pointer;
   opacity: 0.6;
 }
 
@@ -353,8 +385,145 @@ legend {
   padding-left: 10px !important;
 }
 
-.bd-navbar {
-  position: sticky;
+.navbar-fixed-top {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
   top: 0;
-  z-index: 1071;
+  border-width: 0 0 1px;
+}
+
+#sidebar ul {
+  padding: 0;
+  margin: 0 0 10px 25px;
+}
+
+#sidebar ul.unstyled {
+  margin-left: 0;
+  list-style: none;
+  padding: 3px 10px 5px 10px !important;
+}
+
+#sidebar .topic_title {
+  max-width: 270px;
+  font-size: 14px;
+}
+
+#sidebar .topic_title:hover {
+  text-decoration: none !important;
+}
+
+#page-selection {
+  text-align: center;
+  background-color: #fff;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 0 0 5px 0;
+  border-radius: 4px;
+}
+
+.bootpag > li:first-child > a {
+  margin-left: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.bootpag > li:last-child > a {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.bootpag > li {
+  display: inline !important;
+}
+
+.bootpag > .disabled > a,
+.bootpag > .disabled > a:hover {
+  color: #777;
+  cursor: pointer !important;
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.bootpag > li > a {
+  position: relative;
+  float: left;
+  padding: 4px 9px;
+  line-height: 1.42857143;
+  margin-left: -1px;
+  color: #337ab7;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.bootpag > li > a:hover {
+  color: #23527c;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.bootpag > .active > a,
+.bootpag > .active > a:hover {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+ul.bootpag {
+  background: #fff !important;
+  border-radius: 0 0 0.25rem 0.25rem !important;
+}
+
+#post_topic_form .CodeMirror,
+.CodeMirror-scroll {
+  min-height: 200px !important;
+}
+
+.reply-area {
+  padding: 0 1rem 0 3rem !important;
+}
+
+.reply-area .CodeMirror,
+.CodeMirror-scroll {
+  min-height: 120px !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#addComment .CodeMirror,
+.CodeMirror-scroll {
+  min-height: 100px !important;
+}
+
+#comments .comment_area:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.mirrorRotateLevel {
+  transform: rotateY(180deg);
+}
+
+.reply-btn {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.reply-btn:hover {
+  color: #000;
+  opacity: 0.6;
 }
