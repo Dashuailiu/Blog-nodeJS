@@ -197,7 +197,7 @@
     const username = $('#' + comment_id + ' .user-info>a.reply-author')
       .text()
       .trim();
-    console.log(username);
+
     $('#comment' + comment_id).removeClass('hidden');
     var mde = new SimpleMDE({
       element: document.getElementById('replyComment' + comment_id),

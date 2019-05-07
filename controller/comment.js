@@ -37,7 +37,6 @@ async function addCommentByTopicId(req, res) {
     comment.publisher = currentUser._id;
     let commentRet = await new CommentModel(comment).save();
 
-    console.log(TopicController);
     TopicController.addCommentToTopic(
       topic_id,
       commentRet._id,
@@ -45,7 +44,6 @@ async function addCommentByTopicId(req, res) {
     );
     res.redirect(`/topics/${topic_id}#${commentRet._id}`);
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       err_code: 500,
       message: 'Internet Error.'
@@ -82,7 +80,6 @@ async function upCountByCommentId(req, res) {
       message: 'Ok.'
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       err_code: 500,
       message: 'Internet Error.'
@@ -94,7 +91,7 @@ async function replyComment(req, res) {
   try {
     let comment = req.body;
     let topic_id = req.body.topic_id;
-    let currentUser = ./topic11r;
+    let currentUser = req.user;
 
     comment.publisher = currentUser._id;
     comment.replyToComment = req.params.comment_id;
@@ -110,7 +107,6 @@ async function replyComment(req, res) {
 
     res.redirect(`/topics/${topic_id}#${commentRet._id}`);
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       err_code: 500,
       message: 'Internet Error.'

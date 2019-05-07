@@ -163,7 +163,6 @@ async function getTopicById(req, res) {
       commentObj.uped = c.upCountUser.indexOf(user_id) === -1 ? '' : 'uped';
       commentsObj.push(commentObj);
     });
-    console.log(commentsObj);
 
     res.render('./topic/show.html', {
       currentUser: req.user,
@@ -171,7 +170,6 @@ async function getTopicById(req, res) {
       comments: commentsObj
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       err_code: 500,
       message: 'Internet Error.'

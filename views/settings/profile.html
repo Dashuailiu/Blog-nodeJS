@@ -195,8 +195,6 @@
     e.preventDefault();
     var formData = $(this).serialize();
 
-    console.log('asdasd');
-
     $.ajax({
       url: '/settings/profile',
       type: 'post',
@@ -217,7 +215,6 @@
     e.preventDefault();
     var formData = new FormData(formData);
 
-    console.log('asdasd');
     // disabled the submit button
     $('#btnEdit').prop('disabled', true);
 
@@ -233,7 +230,6 @@
         var err_code = data.err_code;
         if (err_code === 0) {
           $('#btnEdit').prop('disabled', false);
-          console.log(data);
           $('#avatarDisplay1').attr('src', data.filePath);
           $('#avatarDisplay2').attr('src', data.filePath);
         } else {

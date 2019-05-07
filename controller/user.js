@@ -5,7 +5,7 @@ module.exports = {
   logout: logout,
   register: register,
   renderPersonalPage: renderPersonalPage,
-  rend./topic11lePage: renderProfilePage,
+  renderProfilePage: renderProfilePage,
   updateProfile: updateProfile,
   uploadAvatar: uploadAvatar
 };
@@ -143,7 +143,7 @@ async function updateProfile(req, res) {
       bio: userUpdateInfo.bio,
       location: userUpdateInfo.location
     };
-    console.log(updateObj);
+
     await UserModel.findByIdAndUpdate(req.user.id, updateObj);
 
     return res.status(200).json({
@@ -164,7 +164,7 @@ async function uploadAvatar(req, res) {
     await UserModel.findByIdAndUpdate(req.user.id, {
       avatar: filePath
     });
-    console.log(req.file);
+
     return res.status(200).json({
       err_code: 0,
       message: 'Upload successfully.',
