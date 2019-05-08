@@ -22,7 +22,7 @@ The purpose of this project is just for leanring nodeJs. I learnt more than just
 
 # Route Table
 
-##Basic router
+## Basic router
 
 | path              | method | params                          | login | remarks                            |
 | ----------------- | ------ | ------------------------------- | ----- | ---------------------------------- |
@@ -31,7 +31,7 @@ The purpose of this project is just for leanring nodeJs. I learnt more than just
 | /settings/profile | POST   | username, gender, bio, location | x     | Requests for updating user profile |
 | /profile/avatar   | POST   | avatar(BINARY)                  | x     | Requests for uploading user avatar |
 
-##User router
+## User router
 
 | path            | method | params                    | login | remarks                    |
 | --------------- | ------ | ------------------------- | ----- | -------------------------- |
@@ -42,7 +42,7 @@ The purpose of this project is just for leanring nodeJs. I learnt more than just
 | /logout         | GET    |                           | x     | Requests for logout        |
 | /users/:user_id | GET    | user_id                   |       | Requests for personal page |
 
-##Topic router
+## Topic router
 
 | path               | method | params                  | login | remarks                                 |
 | ------------------ | ------ | ----------------------- | ----- | --------------------------------------- |
@@ -51,7 +51,7 @@ The purpose of this project is just for leanring nodeJs. I learnt more than just
 | /topics/nocomments | GET    |                         |       | Requests for topics without any comment |
 | /topics/:topic_id  | GET    | topic_id                |       | Requests for topic details              |
 
-##Comment router
+## Comment router
 
 | path                                         | method | params                        | login | remarks                              |
 | -------------------------------------------- | ------ | ----------------------------- | ----- | ------------------------------------ |
@@ -93,19 +93,19 @@ The purpose of this project is just for leanring nodeJs. I learnt more than just
 
 ![avatar](screenshot-personal-page.png)
 
-##Post new topic
+## Post new topic
 
 ![avatar](screenshot-post-new-topic.png)
 
-##Topic detail page
+## Topic detail page
 
 ![avatar](screenshot-topic-details.png)
 
-##User setting
+## User setting
 
 ![avatar](screenshot-user-settings.png)
 
-##Login
+## Login
 
 ![avatar](screenshot-login-page.png)
 
