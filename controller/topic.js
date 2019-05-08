@@ -117,9 +117,8 @@ async function getAllTopics(req, res) {
       })
       .sort('-lastModifiedTime');
 
+    let itemCount = await TopicModel.count(query);
     let topicsObj = serializeTopicList(topics);
-
-    const itemCount = topicsObj.length;
 
     res.render('index.html', {
       currentUser: req.user,

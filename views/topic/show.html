@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="card-body no-padding">
-          <div class="card-text content-style pt-3 pl-4">
+          <div class="card-text content-style pt-3 pl-3 pr-3">
             <div id="mardown-content">{{@(topic.content)}}</div>
           </div>
         </div>
@@ -161,6 +161,11 @@
 <script>
   if (document.getElementById('formControlComment')) {
     var mde = new SimpleMDE({
+      renderingConfig: {
+        markedOptions: {
+          sanitize: true
+        }
+      },
       element: document.getElementById('formControlComment'),
       status: false
     });
@@ -200,6 +205,11 @@
 
     $('#comment' + comment_id).removeClass('hidden');
     var mde = new SimpleMDE({
+      renderingConfig: {
+        markedOptions: {
+          sanitize: true
+        }
+      },
       element: document.getElementById('replyComment' + comment_id),
       status: false
     });

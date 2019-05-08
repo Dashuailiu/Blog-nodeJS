@@ -230,6 +230,7 @@
         var err_code = data.err_code;
         if (err_code === 0) {
           $('#btnEdit').prop('disabled', false);
+          $('#avatarDisplayHeader').attr('src', data.filePath);
           $('#avatarDisplay1').attr('src', data.filePath);
           $('#avatarDisplay2').attr('src', data.filePath);
         } else {

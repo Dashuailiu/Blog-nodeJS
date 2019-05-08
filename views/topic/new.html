@@ -42,6 +42,11 @@
 <link rel="stylesheet" href="/node_modules/simplemde/dist/simplemde.min.css" />
 <script>
   var mde = new SimpleMDE({
+    renderingConfig: {
+      markedOptions: {
+        sanitize: true
+      }
+    },
     element: document.getElementById('contentInput')
   });
   $('#post_topic_form').on('submit', function(e) {

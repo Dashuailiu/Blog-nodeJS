@@ -158,7 +158,7 @@
         page: currentPage
       })
       .on('page', function(event, num) {
-        e.preventDefault();
+        event.preventDefault();
         urlQueryParams.set('page', num);
         window.location.href = '/?' + urlQueryParams.toString();
       });
